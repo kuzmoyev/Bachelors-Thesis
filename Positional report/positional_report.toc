@@ -1,0 +1,12 @@
+\contentsline {section}{\numberline {1}Introduction}{2}{section.0.1}
+\contentsline {section}{\numberline {2}Existing solutions}{2}{section.0.2}
+\contentsline {section}{\numberline {3}Possibilities of the solution}{2}{section.0.3}
+\contentsline {subsection}{\numberline {3.1}Programming language}{3}{subsection.0.3.1}
+\contentsline {subsection}{\numberline {3.2}DBMS}{3}{subsection.0.3.2}
+\contentsline {section}{\numberline {4}Chosen methods}{4}{section.0.4}
+\contentsline {subsection}{\numberline {4.1}Python}{4}{subsection.0.4.1}
+\contentsline {subsection}{\numberline {4.2}Django}{4}{subsection.0.4.2}
+\contentsline {subsection}{\numberline {4.3}Django REST framework}{4}{subsection.0.4.3}
+\contentsline {subsection}{\numberline {4.4}PostgreSQL}{5}{subsection.0.4.4}
+\contentsline {section}{\numberline {5}Current project state}{5}{section.0.5}
+\contentsline {section}{\numberline {6}Conclusion and future outlook}{5}{section.0.6}

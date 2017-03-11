@@ -1,0 +1,12 @@
+\BOOKMARK [1][-]{section.0.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.0.2}{Existing solutions}{}% 2
+\BOOKMARK [1][-]{section.0.3}{Possibilities of the solution}{}% 3
+\BOOKMARK [2][-]{subsection.0.3.1}{Programming language}{section.0.3}% 4
+\BOOKMARK [2][-]{subsection.0.3.2}{DBMS}{section.0.3}% 5
+\BOOKMARK [1][-]{section.0.4}{Chosen methods}{}% 6
+\BOOKMARK [2][-]{subsection.0.4.1}{Python}{section.0.4}% 7
+\BOOKMARK [2][-]{subsection.0.4.2}{Django}{section.0.4}% 8
+\BOOKMARK [2][-]{subsection.0.4.3}{Django REST framework}{section.0.4}% 9
+\BOOKMARK [2][-]{subsection.0.4.4}{PostgreSQL}{section.0.4}% 10
+\BOOKMARK [1][-]{section.0.5}{Current project state}{}% 11
+\BOOKMARK [1][-]{section.0.6}{Conclusion and future outlook}{}% 12
