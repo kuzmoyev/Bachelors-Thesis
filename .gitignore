@@ -1,8 +1,4 @@
 .idea
 
-/Bachelor's thesis/BachelorsThesis.*
-
-!Bachelor's thesis/BachelorsThesis.tex
-!Bachelor's thesis/BachelorsThesis.pdf
-
-Bachelor's thesis/compile.sh
+Bachelor's thesis/pdf
+!Bachelor's thesis/pdf/BachelorsThesis.pdf
