@@ -1,10 +1,3 @@
-% options:
-% thesis=B bachelor's thesis
-% thesis=M master's thesis
-% czech thesis in Czech language
-% english thesis in English language
-% hidelinks remove colour boxes around hyperlinks
-
 \documentclass[thesis=B,english,hidelinks]{FITthesis}[2012/10/20]
 
 % \usepackage[utf8]{inputenc} % LaTeX source encoded as UTF-8
@@ -22,10 +15,6 @@
 % \usepackage[acronym,nonumberlist,toc,numberedsection=autolabel]{glossaries}
 % \iflanguage{czech}{\renewcommand*{\acronymname}{Seznam pou{\v z}it{\' y}ch zkratek}}{}
 % \makeglossaries
-
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
-% EDIT THIS
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 
 \department{Department of Software Engineering}
 \title{ElateMe - Backend}
@@ -50,19 +39,28 @@
 % \newacronym{FIT}{FIT}{Fakulta informa{\v c}n{\' i}ch technologi{\' i}}
 
 \setsecnumdepth{part}
-\chapter{Introduction}
-
+    \chapter{Introduction}
+    \input{tex/Introduction}
 
 
 \setsecnumdepth{all}
-\chapter{State-of-the-art}
+    \chapter{Analysis}
+    \input{tex/Analysis}
 
-\chapter{Analysis and design}
+    \chapter{Design}
+    \input{tex/Design}
 
-\chapter{Realisation}
+    \chapter{Implementation}
+    \input{tex/Implementation}
+
+    \chapter{Testing}
+    \input{tex/Testing}
 
 \setsecnumdepth{part}
-\chapter{Conclusion}
+    \chapter{Conclusion}
+    \input{tex/Conclusion}
+
+
 
 
 \bibliographystyle{iso690}
