@@ -1,0 +1,67 @@
+\newcounter{reqcounter}[section]
+\newcommand{\req}[2]{
+    \stepcounter{reqcounter}
+    \par\indent\par
+    \textbf{#1\arabic{reqcounter} #2}
+}
+\newcommand{\funcreq}[1]{\req{FR}{#1}}
+\newcommand{\nonfreq}[1]{\req{NR}{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Functional requirements %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Functional requirements}
+
+\subsection{Authorization}
+\funcreq{Sign up via Facebook}
+User will be able to sign up to ElateMe application with his Facebook account. Application will load users data
+such as name, surname, email, date of birth, etc.
+\funcreq{Logout}
+Authorized user will be able to log out. In this case he will also stop receiving any notifications from the
+application.
+\funcreq{Load friends from social network}
+On initial login application will load list of user's friends that are already signed up in this application. This
+users will be considered as friends in ElateMe application.
+
+\subsection{Friendship management}
+\funcreq{View friends list}
+User will be able to view list of his Facebook friends that are already signed up in application.
+\funcreq{Create friends group}
+User will be able to create friends group.
+\funcreq{Delete friends group}
+User will be able to delete friends group.
+
+\subsection{Wish management}
+\funcreq{Create wish}
+User will be able to create wish, set its title, description, price(amount of money that he(user) wants to gather),
+and deadline.
+\funcreq{Delete wish}
+User will be able to delete his wish if nobody will have donated money yet.
+\funcreq{Close wish}
+User will be able to close his wish. Money that will have been gatherd on this wish will be refunded to donators.
+\funcreq{View users' wishes list}
+User will be able to browse wishes lists of his friends.
+\funcreq{Create surprise wish}
+User will be able to create surprise wish for one of his friends. In this case user to whom the wish was addressed
+will not have acces to it and will not know about it until the whole amount is collected.
+\funcreq{View wishes comments list}
+User will be able to view list of comments under the wish he will be browsing.
+\funcreq{View contributed wishes list}
+User will be able to view list of wishes he will have contributed to.
+
+\subsection{Feed}
+\funcreq{View users' feed}
+User will recieve feed with latest wishes of his friends.
+
+\subsection{Donation management}
+\funcreq{Donate to wish}
+User will be able to financially contribute to wishes of his friends.
+\funcreq{Refund}
+In the case of the closure of the wish, all gatherd money will be refunded to donators.
+
+\subsection{Comments management}
+\funcreq{Comment wish}
+User will be able to leave a comment under the wish.
+\funcreq{Delete comment}
+User will be able to delete his comment.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Non-functional requirements %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Non-functional requirement}
