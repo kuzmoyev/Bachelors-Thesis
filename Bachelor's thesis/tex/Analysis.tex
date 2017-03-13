@@ -1,11 +1,11 @@
 \newcounter{reqcounter}[section]
 \newcommand{\req}[2]{
     \stepcounter{reqcounter}
-    \par\indent\par
+    \indent\par
     \textbf{#1\arabic{reqcounter} #2}
 }
-\newcommand{\funcreq}[1]{\req{FR}{#1}}
-\newcommand{\nonfreq}[1]{\req{NR}{#1}}
+\newcommand{\funcreq}[1]{\req{F}{#1}}
+\newcommand{\nonfreq}[1]{\req{N}{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Functional requirements %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Functional requirements}
@@ -25,7 +25,7 @@ users will be considered as friends in ElateMe application.
 \funcreq{View friends list}
 User will be able to view list of his Facebook friends that are already signed up in application.
 \funcreq{Create friends group}
-User will be able to create friends group.
+User will be able to create friends group. Groups will be used for simplification of friends management.
 \funcreq{Delete friends group}
 User will be able to delete friends group.
 
@@ -65,3 +65,21 @@ User will be able to delete his comment.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Non-functional requirements %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Non-functional requirement}
+
+\subsection{Back-end API}
+\nonfreq{RESTful}
+Back-end API will follow architectural constraints of REST architectural style.
+\nonfreq{HTTPS}
+Server will comunicate with client via HTTPS
+\nonfreq{PostgreSQL database}
+PostgreSQL will be used as the main DBMS.
+\nonfreq{Performance}
+Server will be able to serve 1500 requests per second.
+
+\subsection{Payments}
+\nonfreq{FIO-bank}
+User will be able to make payments via FIO-bank.
+\nonfreq{Bitcoin}
+User will be able to make payments via Bitcoin.
+\nonfreq{Secure payments}
+System will ensure secure payments.
