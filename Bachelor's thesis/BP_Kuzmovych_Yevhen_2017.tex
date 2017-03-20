@@ -1,15 +1,15 @@
 \documentclass[thesis=B,english,hidelinks]{FITthesis}[2012/10/20]
 
 \usepackage[utf8]{inputenc} % LaTeX source encoded as UTF-8
-% \usepackage[latin2]{inputenc} % LaTeX source encoded as ISO-8859-2
-% \usepackage[cp1250]{inputenc} % LaTeX source encoded as Windows-1250
+\usepackage{graphicx} % graphics files inclusion
+\usepackage{dirtree} % directory tree visualisation
+\usepackage[printonlyused]{acronym} % acronims
+\usepackage{float} % floats
+\usepackage{indentfirst} % indent in firs paragraph
+\raggedbottom
 
-\usepackage{graphicx} %graphics files inclusion
-% \usepackage{subfig} %subfigures
-% \usepackage{amsmath} %advanced maths
-% \usepackage{amssymb} %additional math symbols
+\graphicspath{{img/}} % images folder
 
-\usepackage{dirtree} %directory tree visualisation
 
 % % list of acronyms
 % \usepackage[acronym,nonumberlist,toc,numberedsection=autolabel]{glossaries}
@@ -35,8 +35,14 @@
 
 \begin{document}
 
-% \newacronym{CVUT}{{\v C}VUT}{{\v C}esk{\' e} vysok{\' e} u{\v c}en{\' i} technick{\' e} v Praze}
-% \newacronym{FIT}{FIT}{Fakulta informa{\v c}n{\' i}ch technologi{\' i}}
+\newcommand{\image}[3][1]{
+\begin{figure}[H]
+	\centerline{\includegraphics[width=#1\textwidth]{#2}}
+	\caption{#3}
+    \label{fig:#2}
+\end{figure}
+}
+
 
 \setsecnumdepth{part}
     \chapter{Introduction}
@@ -70,11 +76,13 @@
 \appendix
 
 \chapter{Acronyms}
-% \printglossaries
-\begin{description}
-	\item[GUI] Graphical user interface
-	\item[XML] Extensible markup language
-\end{description}
+\begin{acronym}
+	\acro{API}{Application Programming Interface}
+	\acro{MVC}{Model-View-Controller}
+	\acro{HTTPS}{HyperText Transfer Protocol Secure}
+	\acro{DBMS}{DataBase Management System}
+	\acro{REST}{Representational State Transfer}
+\end{acronym}
 
 
 \chapter{Contents of enclosed CD}

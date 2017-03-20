@@ -1,3 +1,10 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Foreword %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+This chapter will focus on analysis of the project as a part of a software development that connects customers
+requirements to the system and its following design and development.
+
+Analysis of software project is intended to define detailed description of the product, break it down into
+requirements to the system, their systematization, detection of dependencies, and documentation.
+
 \newcounter{reqcounter}[section]
 \newcommand{\req}[2]{
     \stepcounter{reqcounter}
@@ -42,8 +49,6 @@ User will be able to browse wishes lists of his friends.
 \funcreq{Create surprise wish}
 User will be able to create surprise wish for one of his friends. In this case user to whom the wish was addressed
 will not have acces to it and will not know about it until the whole amount is collected.
-\funcreq{View wishes comments list}
-User will be able to view list of comments under the wish he will be browsing.
 \funcreq{View contributed wishes list}
 User will be able to view list of wishes he will have contributed to.
 
@@ -58,6 +63,8 @@ User will be able to financially contribute to wishes of his friends.
 In the case of the closure of the wish, all gatherd money will be refunded to donators.
 
 \subsection{Comments management}
+\funcreq{View wishes comments list}
+User will be able to view list of comments under the wish he will be browsing.
 \funcreq{Comment wish}
 User will be able to leave a comment under the wish.
 \funcreq{Delete comment}
@@ -66,11 +73,11 @@ User will be able to delete his comment.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Non-functional requirements %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Non-functional requirement}
 
-\subsection{Back-end API}
-\nonfreq{RESTful}
+\subsection{Back-end \ac{API}}
+\nonfreq{\ac{REST}ful}
 Back-end API will follow architectural constraints of REST architectural style.
-\nonfreq{HTTPS}
-Server will comunicate with client via HTTPS
+\nonfreq{\ac{HTTPS}}
+Server will comunicate with client via \ac{HTTPS}.
 \nonfreq{PostgreSQL database}
 PostgreSQL will be used as the main DBMS.
 \nonfreq{Performance}
@@ -83,3 +90,17 @@ User will be able to make payments via FIO-bank.
 User will be able to make payments via Bitcoin.
 \nonfreq{Secure payments}
 System will ensure secure payments.
+\nonfreq{Consistency}
+Servers data about payments will be consistent with data in payments systems (FIO-bank, Bitcoin, etc.).
+System will react accordingly to errors appeared during payments.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Use cases %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Use cases}
+** insert Use cases diagram **
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% System structure %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{System structure}
+\image[1.3]{component_diagram.pdf}{Component diagram}
+
