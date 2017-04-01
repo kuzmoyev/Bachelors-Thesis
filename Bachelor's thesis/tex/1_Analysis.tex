@@ -1,9 +1,23 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Foreword %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-This chapter will focus on analysis of the project as a part of a software development that connects customers
+This chapter will focus on analysis of the project as a part of a software development that connects customer's
 requirements to the system and its following design and development.
 
 Analysis of software project is intended to define detailed description of the product, break it down into
 requirements to the system, their systematization, detection of dependencies, and documentation.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SP1 and SP2 subjects %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{SP1 and SP2 subjects}
+The work on the ElateMe project started within the framework of the SP1~subject. Our development team devided into
+groups: Android, iOS and Back-end developers. Our task was to define and document main client's
+requirements, implement functioning prototypes of mobile applications and back-end server \ac{API}. During SP1~subject,
+Maksym Balatsko was working on prototype of back-end server, so choise of used technologies was up to him. Chosen
+technologies will be discussed in the next chapter.
+
+Because of changes in requirements and provided a new interface design of the mobile applications, analysis and it's
+documentation has undergone certain changes. And at the start of SP2~subject implementation of back-end API,
+on which Maksym and I worked, has started.
+
 
 \newcounter{reqcounter}[section]
 \newcommand{\req}[2]{
@@ -19,7 +33,7 @@ requirements to the system, their systematization, detection of dependencies, an
 
 \subsection{Authorization}
 \funcreq{Sign up via Facebook}
-User will be able to sign up to ElateMe application with his Facebook account. Application will load users data
+User will be able to sign up to ElateMe application with his Facebook account. Application will load user's data
 such as name, surname, email, date of birth, etc.
 \funcreq{Logout}
 Authorized user will be able to log out. In this case he will also stop receiving any notifications from the
@@ -38,7 +52,7 @@ User will be able to delete friends group.
 
 \subsection{Wish management}
 \funcreq{Create wish}
-User will be able to create wish, set its title, description, price(amount of money that he(user) wants to gather),
+User will be able to create wish, set it's title, description, price(amount of money that he(user) wants to gather),
 and deadline.
 \funcreq{Delete wish}
 User will be able to delete his wish if nobody will have donated money yet.
@@ -53,7 +67,7 @@ will not have acces to it and will not know about it until the whole amount is c
 User will be able to view list of wishes he will have contributed to.
 
 \subsection{Feed}
-\funcreq{View users' feed}
+\funcreq{View user's feed}
 User will recieve feed with latest wishes of his friends.
 
 \subsection{Donation management}
@@ -102,5 +116,55 @@ System will react accordingly to errors appeared during payments.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% System structure %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{System structure}
-\image[1.3]{component_diagram.pdf}{Component diagram}
+The whole ElateMe application system is devided into components. Main components are server, Android and iOS clients.
+
+Detailed structure of server and its connection with external interfaces are presented at the component diagram
+\ref{fig:component_diagram}. As seen in the diagram, server provides interface for mobile applications to communicat via
+REST api. Server also uses interfaces of Facebook (Graph API) to recieve needed data about users and interfaces of
+payment systems (FIO-bank and Bitcoin) for payments processing.
+
+Inside the server is divided into components that are responsible for storing and processing data of application
+entities. This components are called \textit{apps} in Django. Apps communicate with database via Django \textit{models}.
+Models in Django is an interface designed to simplify querying to database.
+
+\image[1.3]{component_diagram}{pdf}{Component diagram}
+
+The diagram also shows the use of interfaces of Facebook and payment systems by mobile clients, but they are not a part
+of my work, so their design and implementation will not be described in this thesis.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Authentication %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Authentication}
+User has to be authorized to use the application. ElateMe application will not provide in-app registration. User
+authentication will be conducted through exclusively through third-party systems. It is made to simplify the
+registration in the application.
+
+
+\subsection{Facebook}
+User authentication will be coducted through his Facebook account.
+
+After first login, application will get from Facebook needed information about the user: first name, last name,
+email address, list of user's friends. User's Facebook friends who are already logged in to the application,
+automatically become his friends in the ElateMe.
+
+Despite the lack of in-app registration, user's information recieved from Facebook will be stored in ElateMe system
+as well, because user will be able to add other users to his friend list, create friends groups independently from
+Facebook. From which it follows that user's ElateMe account will not be synchronized with his Facebook account.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
