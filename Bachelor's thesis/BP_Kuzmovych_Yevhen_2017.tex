@@ -5,9 +5,10 @@
 \usepackage{dirtree} % directory tree visualisation
 \usepackage[printonlyused]{acronym} % acronims
 \usepackage{float} % floats
-\usepackage{indentfirst} % indent in firs paragraph
+\usepackage{indentfirst} % indent in first paragraph
 \raggedbottom
 \usepackage[all]{hypcap} % for going to the top of an image when a figure reference is clicked
+\usepackage[numbers]{natbib}
 
 \graphicspath{{img/}} % images folder
 
@@ -36,9 +37,16 @@
 
 \begin{document}
 
+
+\newcommand{\smplimage}[3][1]{
+    \centerline{\includegraphics[width=#1\textwidth]{#2.#3}}
+}
+
+% \image[size]{diagram and lable name}{extention}{caption}
+% \image[1.3]{component_diagram}{pdf}{Component diagram}
 \newcommand{\image}[4][1]{
 \begin{figure}[H]
-	\centerline{\includegraphics[width=#1\textwidth]{#2.#3}}
+    \smplimage[#1]{#2}{#3}
 	\caption{#4}
     \label{fig:#2}
 \end{figure}
@@ -71,7 +79,7 @@
 
 
 \bibliographystyle{iso690}
-\bibliography{mybibliographyfile}
+\bibliography{bibliography}
 
 \setsecnumdepth{all}
 \appendix

@@ -7,15 +7,16 @@ requirements to the system, their systematization, detection of dependencies, an
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% SP1 and SP2 subjects %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{SP1 and SP2 subjects}
-The work on the ElateMe project started within the framework of the SP1~subject. Our development team devided into
+\section{BI-SP1 and BI-SP2 subjects}
+The work on the ElateMe project started within the framework of the BI-SP1~subject. Our development team devided into
 groups: Android, iOS and Back-end developers. Our task was to define and document main client's
-requirements, implement functioning prototypes of mobile applications and back-end server \ac{API}. During SP1~subject,
-Maksym Balatsko was working on prototype of back-end server, so choise of used technologies was up to him. Chosen
-technologies will be discussed in the next chapter.
+requirements, implement functioning prototypes of mobile applications and back-end server \ac{API}. During
+BI-SP1~subject, Maksym Balatsko was working on prototype of back-end server, so choise of used technologies was up to
+him. Then the technology stack was agreed with supervisor of the project. Chosen technologies will be discussed in
+the next chapter.
 
 Because of changes in requirements and provided a new interface design of the mobile applications, analysis and it's
-documentation has undergone certain changes. And at the start of SP2~subject implementation of back-end API,
+documentation has undergone certain changes. And at the start of BI-SP2~subject implementation of back-end API,
 on which Maksym and I worked, has started.
 
 
@@ -108,9 +109,16 @@ System will ensure secure payments.
 Servers data about payments will be consistent with data in payments systems (FIO-bank, Bitcoin, etc.).
 System will react accordingly to errors appeared during payments.
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Use cases %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Use cases}
 ** insert Use cases diagram **
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Domain model %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Domain model}
+** insert Domain model diagram **
 
 
 
@@ -137,12 +145,12 @@ of my work, so their design and implementation will not be described in this the
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Authentication %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Authentication}
 User has to be authorized to use the application. ElateMe application will not provide in-app registration. User
-authentication will be conducted through exclusively through third-party systems. It is made to simplify the
+authentication will be conducted exclusively through third-party systems. It is made to simplify the
 registration in the application.
 
 
 \subsection{Facebook}
-User authentication will be coducted through his Facebook account.
+User authentication will be conducted through his Facebook account.
 
 After first login, application will get from Facebook needed information about the user: first name, last name,
 email address, list of user's friends. User's Facebook friends who are already logged in to the application,
@@ -153,8 +161,13 @@ as well, because user will be able to add other users to his friend list, create
 Facebook. From which it follows that user's ElateMe account will not be synchronized with his Facebook account.
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Payments system %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Payments system}
 
 
+
+
+\subsection{Refund mechanism}
 
 
 

@@ -5,12 +5,19 @@ NC='\033[0m'
 
 OUT_DIR=pdf
 TEX_FILE=$(echo *.tex)
+AUX_FILE=${OUT_DIR}/${TEX_FILE/tex/aux}
 PDF_FILE=${OUT_DIR}/${TEX_FILE/tex/pdf}
 LOG_FILE=${OUT_DIR}/compilation.log
 
 mkdir -p ${OUT_DIR}
 pdflatex -halt-on-error -file-line-error -interaction=nonstopmode -output-directory=${OUT_DIR} \
-    ${TEX_FILE} > ${LOG_FILE}
+         ${TEX_FILE} > ${LOG_FILE} && \
+bibtex -terse -min-crossrefs=1 ${AUX_FILE} && \
+pdflatex -halt-on-error -file-line-error -interaction=nonstopmode -output-directory=${OUT_DIR} \
+         ${TEX_FILE} > ${LOG_FILE} && \
+pdflatex -halt-on-error -file-line-error -interaction=nonstopmode -output-directory=${OUT_DIR} \
+         ${TEX_FILE} > ${LOG_FILE}
+
 
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}"
