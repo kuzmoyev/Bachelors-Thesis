@@ -1,0 +1,78 @@
+\section{Unit tests}
+Alongside with the development automatic testing was performed using unit tests. Unit tests are designed to verify the
+correct functioning of the parts of the application.
+
+Unit testing code means validation or performing the sanity check of code. Sanity check is a basic test to quickly
+evaluate whether the result of calculation can possibly be true. It is a simple check to see whether the produced
+material is coherent. \cite{unittesting}
+
+\subsection{Django REST tests}
+For testing, native tools were used, namely the Django REST framework tests. Similar to java JUnit tests Django tests
+are class-based. Every test case is a method of the class, that extends \class{APITestCase} from the module
+\module{rest\_framework.test}. Classes can also contain the following methods:
+
+\begin{itemize}
+\item{setUp}: Method called to prepare the test fixture.
+\item{tearDown}: Method called immediately after the test method has been called and the result recorded.
+\end{itemize}
+
+For testing, Django creates a separate empty database independent of the main database. Sqlite DBMS is used, for testing
+in this project.
+
+\subsection{Auxiliary methods}
+For testing of the server API, I wrote a set of auxiliary methods that simulate HTTP requests to the server. This
+methods take URL to which the requester is sent and optionaly information (JSON) which is sent as the body of the
+request. Methods use \class{APIRequestFactory} to perform requests to the server.
+
+Methods also use \method{force\_authenticate} function that allows to authenticate user (in this case test user) in the
+system without involvement of Facebook. This function is used for testing of request that require authorization.
+
+
+\subsection{Test cases}
+As an example of a test, I'll take the creation of the wish by the user.
+
+Initially in the method \method{setUp} I create test user, after that I make a POST request to the server with
+information about the wish in the body of the request. After the server responded, I check status code of the response,
+compare the information between the body of the request and the body of the response (body of the response contains
+the newly created wish) and check that wish is added to the database.
+
+\begin{lstlisting}
+from django.urls import reverse
+from rest_framework.test import APITestCase
+from rest_framework import status
+from account.models import User, UserManager
+from wishes.models import Wish
+
+# auxiliary methods for http requests
+from util.test_requests import post, get, put, patch, delete
+
+class WishesTest(APITestCase):
+
+  def setUp(self):
+    self.url = reverse('wishes:wishes')
+    self.user = UserManager().create_user('test1@test.com', 'test')
+
+  def test_create_wish(self):
+    wish_data = {
+      'title': "iPhone7",
+      'description': "I don't need no jack",
+      'amount': 19999
+    }
+    status_code, response_data = post(url=self.url,
+                                      user=self.user,
+                                      data=wish_data)
+
+    self.assertEqual(status_code, status.HTTP_201_CREATED)
+    self.assertEqual(response_data['title'], wish_data['title'])
+    self.assertEqual(response_data['amount'], wish_data['amount'])
+    self.assertEqual(Wish.objects.get().title, wish_data['title'])
+
+
+
+\end{lstlisting}
+
+This is a positive test, so the status code must be 201 (created), wish should be created and added to the database.
+
+
+\section{Apachebench}
+

@@ -4,7 +4,7 @@ GREEN='\033[0;32m'
 NC='\033[0m'
 
 OUT_DIR=pdf
-TEX_FILE=$(echo *.tex)
+TEX_FILE=$(echo BP_*.tex)
 AUX_FILE=${OUT_DIR}/${TEX_FILE/tex/aux}
 PDF_FILE=${OUT_DIR}/${TEX_FILE/tex/pdf}
 LOG_FILE=${OUT_DIR}/compilation.log
