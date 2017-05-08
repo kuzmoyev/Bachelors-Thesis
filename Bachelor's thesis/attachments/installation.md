@@ -1,6 +1,6 @@
 # Installation guide
 
-###### This is guide on how to setup, run and deploy ElateMe back-end server.
+###### This is the guide on how to setup, run and deploy ElateMe back-end server on Ubuntu OS.
 
 ### Requirements
 To be able to setup and run project you need

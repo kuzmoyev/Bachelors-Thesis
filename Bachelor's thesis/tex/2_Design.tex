@@ -20,9 +20,8 @@ Diagram \ref{fig:authentication_activity} shows mechanism of successful authenti
     \item \textbf{#1} \par
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Server API %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Server API}
+\section{REST API}
 
-\subsection{REST}
 Server API will be built on the basis of \ac{REST}. \ac{REST} is the architectural solution for the transfer of
 structural data between server and client \cite{rest}.
 API is considered RESTful if it follows certain rules \cite{whatisrest}:
@@ -90,9 +89,9 @@ front-end \cite{django}.
 
 \subsection{Django REST}
 Django REST framework is an open source project built on Django framework. It contains needed tools for implementation
-of \ac{REST}ful \ac{API}.
+of \ac{REST}ful \ac{API} such as serializers, pagination, permissions, etc.
 
-\subsection{PostgreSQL}
+\subsection{PostgreSQL and SQLite}
 On initial stage of the development, SQLite will be used as a \ac{DBMS}, because it does not require a standalone
 database server and is simple to set up. The database will be changed and migrated to PostgreSQL later.
 
@@ -105,6 +104,34 @@ nginx [engine x] is an HTTP and reverse proxy server, a mail proxy server, and a
 originally written by Igor Sysoev \cite{nginx}. According to Netcraft \cite{netcraft}, nginx served or proxied 28.50\%
 busiest sites in March 2017.
 
+
+\newcommand{\dbpart}[1]{
+\item \textbf{#1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Database model %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Database model}
+One of the main parts of the web server is the database. Before the implementation of the physical database model, a
+database design is created, the data model.
+
+A data model is a combination of three components \cite{dbmodel}:
+
+\begin{itemize}
+\dbpart{The structural part}: A collection of data structures (or entity types, or object types) which define the set of
+allowable databases.
+\dbpart{The integrity part}: A collection of general integrity constraints, which specify the set of consistent databases or the
+set of allowable changes to a database.
+\dbpart{The manipulative part}: A collection of operators or inference rules, which can be applied to an allowable database in
+any required combination in order to query and update parts of the database.
+\end{itemize}
+
+Thus, the structure of the ElateMe database was defined and documented. Full datatabase model is in the attachments.
+It is not included in the text of this thesis because of its large volume. The documentation is divided into logical
+parts containing the corresponding database tables, their columns, and connections. Diagrams include the following
+connections.
+
+\smplimage{db_model_connections}{pdf}
+
+This documentation, however, is not an accurate representation of the physical database, since django models are used to
+work with database, which themselves create tables and connections between them.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Class model %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Class model}
@@ -140,6 +167,15 @@ responsible for sending push notifications to the specific \ac{OSPNS}s.
 
 
 \subsection{Payments}
+Payment information will be stored in the models that are inherited from the \class{Payment} model. At the moment these
+classes are \class{FIOBankaPayment} and \class{BitcoinPayment}. They store information for conducting and refunding
+payments needed for interfaces of FIO-banka and Bitcoins respectively. Payment processing will be performed by
+\class{PaymentsHandler}s. They provide interfaces for the processing of donations, refunations and payments for the
+completed wishes. For each \class{Payment} model there will be a corresponding \class{PaymentsHandler}. Which means if
+a new payment system arrives, it will be enough to override the \class{Payments} class with the necessary information
+for this payment system and implement the \class{PaymentsHandler} interface for this particular system.
 
+\image[1.3]{payments_class_diagram}{pdf}{Payments class model}
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Deployment model %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Deployment model}

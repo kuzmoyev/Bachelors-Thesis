@@ -22,97 +22,146 @@ on which Maksym and I worked, has started.
 
 \newcounter{reqcounter}[section]
 \newcommand{\req}[2]{
-\stepcounter{reqcounter}
+\par\stepcounter{reqcounter}
 \indent\par
-\textbf{#1\arabic{reqcounter} #2}
+\textbf{#1\arabic{reqcounter}: #2}
 }
 \newcommand{\funcreq}[1]{\req{F}{#1}}
 \newcommand{\nonfreq}[1]{\req{N}{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Functional requirements %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Functional requirements}
+Functional requirements specify the behaviors the product will exhibit under specific conditions. They describe what
+the developers must implement to enable users to accomplish their task (user requirements), thereby satisfying the
+business requirements. \cite{funcreq}
 
 \subsection{Authorization}
 \funcreq{Sign up via Facebook}
-User will be able to sign up to ElateMe application with his Facebook account. Application will load user's data
+User shall be able to sign up to ElateMe application with his Facebook account. Application shall load user's data
 such as name, surname, email, date of birth, etc.
 \funcreq{Logout}
-Authorized user will be able to log out. In this case he will also stop receiving any notifications from the
+Authorized user shall be able to log out. In this case he shall also stop receiving any notifications from the
 application.
 \funcreq{Load friends from social network}
-On initial login application will load list of user's friends that are already signed up in this application. This
-users will be considered as friends in ElateMe application.
+On initial login application shall load list of user's friends that are already signed up in this application. This
+users shall be considered as friends in ElateMe application.
 
 \subsection{Friendship management}
 \funcreq{View friends list}
-User will be able to view list of his Facebook friends that are already signed up in application.
+User shall be able to view list of his Facebook friends that are already signed up in application.
 \funcreq{Create friends group}
-User will be able to create friends group. Groups will be used for simplification of friends management.
+User shall be able to create friends group. Groups shall be used for simplification of friends management.
 \funcreq{Delete friends group}
-User will be able to delete friends group.
+User shall be able to delete friends group.
 
 \subsection{Wish management}
 \funcreq{Create wish}
-User will be able to create wish, set it's title, description, price(amount of money that he(user) wants to gather),
+User shall be able to create wish, set it's title, description, price(amount of money that he(user) wants to gather),
 and deadline.
 \funcreq{Delete wish}
-User will be able to delete his wish if nobody will have donated money yet.
+User shall be able to delete his wish if nobody shall have donated money yet.
 \funcreq{Close wish}
-User will be able to close his wish. Money that will have been gatherd on this wish will be refunded to donators.
+User shall be able to close his wish. Money that will have been gatherd on this wish shall be refunded to donators.
 \funcreq{View users' wishes list}
-User will be able to browse wishes lists of his friends.
+User shall be able to browse wishes lists of his friends.
 \funcreq{Create surprise wish}
-User will be able to create surprise wish for one of his friends. In this case user to whom the wish was addressed
-will not have acces to it and will not know about it until the whole amount is collected.
+User shall be able to create surprise wish for one of his friends. In this case user to whom the wish was addressed
+shall not have acces to it and shall not know about it until the whole amount is collected.
 \funcreq{View contributed wishes list}
-User will be able to view list of wishes he will have contributed to.
+User shall be able to view list of wishes he will have contributed to.
 
 \subsection{Feed}
 \funcreq{View user's feed}
-User will recieve feed with latest wishes of his friends.
+User shall recieve feed with latest wishes of his friends.
 
 \subsection{Donation management}
 \funcreq{Donate to wish}
-User will be able to financially contribute to wishes of his friends.
+User shall be able to financially contribute to wishes of his friends.
 \funcreq{Refund}
-In the case of the closure of the wish, all gatherd money will be refunded to donators.
+In the case of the closure of the wish, all gatherd money shall be refunded to donators.
 
 \subsection{Comments management}
 \funcreq{View wishes comments list}
-User will be able to view list of comments under the wish he will be browsing.
+User shall be able to view list of comments under the wish he will be browsing.
 \funcreq{Comment wish}
-User will be able to leave a comment under the wish.
+User shall be able to leave a comment under the wish.
 \funcreq{Delete comment}
-User will be able to delete his comment.
+User shall be able to delete his comment.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Non-functional requirements %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Non-functional requirement}
+Non-functional requirement is a software requirement that describes not what the software will do, but how the software
+will do it, for example, software performance requirements, software external interface requirements, software design
+constraints and software quality attributes. Non-functional requirements are difficult to test; therefore they are
+usually evaluated subjectively.\cite{nonfuncreq}
 
 \subsection{Back-end \ac{API}}
 \nonfreq{\ac{REST}ful}
-Back-end API will follow architectural constraints of REST architectural style.
+Back-end API shall follow architectural constraints of REST architectural style.
 \nonfreq{\ac{HTTPS}}
-Server will comunicate with client via \ac{HTTPS}.
+Server shall comunicate with client via \ac{HTTPS}.
 \nonfreq{PostgreSQL database}
-PostgreSQL will be used as the main DBMS.
+PostgreSQL shall be used as the main DBMS.
 \nonfreq{Performance}
-Server will be able to serve 1500 requests per second.
+Server shall be able to serve 1500 requests per second.
 
 \subsection{Payments}
 \nonfreq{FIO-bank}
-User will be able to make payments via FIO-bank.
+User shall be able to make payments via FIO-bank.
 \nonfreq{Bitcoin}
-User will be able to make payments via Bitcoin.
+User shall be able to make payments via Bitcoin.
 \nonfreq{Secure payments}
-System will ensure secure payments.
+System shall ensure secure payments.
 \nonfreq{Consistency}
-Servers data about payments will be consistent with data in payments systems (FIO-bank, Bitcoin, etc.).
-System will react accordingly to errors appeared during payments.
+Servers data about payments shall be consistent with data in payments systems (FIO-bank, Bitcoin, etc.).
+System shall react accordingly to errors appeared during payments.
 
 
+
+\newcommand{\uccomponent}[1]{
+\item \textbf{#1}
+}
+\newcommand{\ucactor}[1]{
+\item \textbf{#1}
+}
+\newcommand{\ucgroup}[1]{
+\item \textbf{#1}
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Use cases %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Use cases}
-** insert Use cases diagram **
+Use cases were defined after analising of functional and non-functional requirements. Use cases documentation serves for
+better undestending of functionality required from the system. Use cases model of this application is presented on the
+diagram \ref{fig:use_cases_diagram}.
+
+Use case model includes the following components:
+
+\begin{itemize}
+\uccomponent{Actors} represent people and external systems involved in a particular case cases. The diagram focuses
+specifically on the actors to insure that the system provides useful and usable functionality.
+
+The main actors of this system are:
+\begin{itemize}
+\ucactor{User} that uses mobile or web application.
+\ucactor{Facebook} participates in user authorization and provides an interface for obtaining the necessary information
+about him (user).
+\ucactor{Payment system} participates in payments, namely donations and refundances. In the role of payment systems in
+this application are Fio-Banka and Bitcoin.
+\end{itemize}
+
+\uccomponent{Use cases} represent the functionality that the system provides for actors. In this diagram they are
+divided into logical groups namely
+\begin{itemize}
+\ucgroup{Authentication} of the user through Facebook and obtaining the necessary information about the user from his
+Facebook account.
+\ucgroup{Friendship} between users and the division of friends into groups.
+\ucgroup{Wish management} includes the creation of wishes, donations and comments, as well as closure of the wishes with
+subsequent refandation, etc.
+\ucgroup{Other} includes the news feed and notifications.
+\end{itemize}
+
+\end{itemize}
+
+\image[1.3]{use_cases_diagram}{pdf}{Use cases diagram}
 
 
 
@@ -170,7 +219,7 @@ Facebook.
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Payments system %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Payments system}
-The application is based on croweding. So application (and the server in particular) has to provide service for
+The ElateMe project is based on crowdfunding. So application (and the server in particular) has to provide service for
 payments processing. According to the requirements, this service should use interfaces of FIO-banka and Bitcoin.
 
 \subsection{Use cases}
@@ -190,10 +239,46 @@ deadline. In both cases, already collected money is returned to the donators' ac
 \end{itemize}
 
 \subsection{FIO-banka}
+Since the open \ac{API} of the FIO-banka \cite{fio} does not provide sufficient functionality for the needs of this
+application, it was necessary to agree directly with bank on the provision of an needed interface. Due to prolonged
+communication with the bank, we still did not get the full documentation. We only got a description of the payment
+process, which can be seen on the diagram \ref{fig:fio_payment_activity}.
 
+\image[1.3]{fio_payment_activity}{pdf}{Payment via FIO-banka}
 
-\subsection{Refundation}
+As seen on the diagram, before initiating the payment, the mobile application will send a request to the server to
+create a donation, the server will create an unconfirmed donation and respond to the application with information about
+the newly created donation. From this information, the application will take the donation id, which will later serve as
+the identifier of the paid product. The application initializes the payment with the necessary information about the
+user and donation and redirects the user to the payment gateway of the FIO-banka in the web-view. After processing the
+payment, the FIO-Banka redirects the user to one of the two urls on the server, depending on the state of
+the payment (success/fail urls). In case of success, the server marks the payment as confirmed, alternatively not
+successful. The mobile application will close the web-view and notify the user about the status of the payment.
 
+\subsection{Bitcoin}
+The second way to make payments in the application is Bitcoin.
+
+Bitcoin is a collection of concepts and technologies that form the basis of a digital money ecosystem. Units of currency
+called bitcoins are used to store and transmit value among participants in the bitcoin network. Bitcoin users
+communicate with each other using the bitcoin protocol primarily via the Internet, although other transport networks can
+also be used. The bitcoin protocol stack, available as open source software, can be run on wide range of computing
+devices, including laptops and smartphones, making the technology easily accessible \cite{bitcoin}. A detailed analysis
+of the system of Bitcoins was carried out in the bachelor work \cite{ios1} of Yegor Terokhin, one of the iOS developers
+of ElateMe. In his work he describes in detail the principles of work of Bitcoins and the benefits of using this system
+in the framework of the ElateMe project.
+
+To make payments using Bitcoins, it was decided to use Coinbase. Founded in June of 2012, Coinbase is a digital currency
+wallet and platform where merchants and consumers can transact with new digital currencies like bitcoin and ethereum
+\cite{coinbase}. The main benefit of using Coinbase is that it provides \ac{SDK} for both mobile platforms and a python
+used for the implementation of the backend in this project.
+
+\subsection{Refund mechanism}
+%Как было сказано ранее, рефунданция происходит в случае закрытия виша. Виш закрывается в двух ситуациях.
+%
+%
+%Принцыпы рефунданцы платежей фио-банки и
+%биткоинов довольно просты и похожи. Каждый платеж в обоих системах имеет свой идентификатор (трансакшн_ид) по которому
+%и проводится рефунданция через веб-АПИ в случае фио-банки и через Coinbase СДК в случае биткоинов.
 
 
 

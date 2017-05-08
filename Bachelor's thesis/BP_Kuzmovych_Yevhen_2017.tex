@@ -5,12 +5,12 @@
 \usepackage{dirtree} % directory tree visualisation
 \usepackage[printonlyused]{acronym} % acronims
 \usepackage{float} % floats
-\usepackage{indentfirst} % indent in first paragraph
+%\usepackage{indentfirst} % indent in first paragraph
 \raggedbottom
 \usepackage[all]{hypcap} % for going to the top of an image when a figure reference is clicked
 \usepackage[numbers]{natbib}
 \usepackage{listings} % for the source code
-
+\lstset{language=Python, frame=tb, basicstyle=\small} %or \small or \footnotesize etc.}
 
 
 \graphicspath{{img/}} % images folder
@@ -58,8 +58,12 @@
 }
 
 
-\newcommand{\class}[1]{\textbf{\mbox#1}}
+\newcommand{\class}[1]{\textit{\mbox#1}}
 \newcommand{\method}[1]{\textit{\mbox#1}}
+\newcommand{\field}[1]{\textit{\mbox#1}}
+\newcommand{\app}[1]{\textit{\mbox#1}}
+\newcommand{\file}[1]{\textit{\mbox#1}}
+\newcommand{\bash}[1]{\textit{\mbox#1}}
 \newcommand{\module}[1]{\textit{\mbox#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -99,12 +103,15 @@
 \begin{acronym}
 	\acro{API}{Application Programming Interface}
 	\acro{MVC}{Model-View-Controller}
+	\acro{SDK}{Software Development Kit}
 	\acro{HTTPS}{HyperText Transfer Protocol Secure}
+	\acro{URL}{Uniform Resource Locator}
 	\acro{DBMS}{DataBase Management System}
 	\acro{REST}{Representational State Transfer}
 	\acro{OSPNS}{Operating system push notification service}
 	\acro{GCM}{Google Cloud Messaging}
 	\acro{APNs}{Apple Push Notification service}
+	\acro{JSON}{JavaScript Object Notation}
 \end{acronym}
 
 

@@ -1,18 +1,224 @@
+This chapter contains a description of the implementation of the project's server side. This chapter will describe the
+structure of the project, the problems arose during implementation and ways to solve them. There will also be described
+guide for the installation, launch and deployment of this project.
+
+This chapter is intended to familiarize the reader with the implementation of this application and to simplify the
+understanding of the structure of the project for future developers.
+
+
+
+\newcommand{\appitem}[1]{
+\item\textbf{#1}.
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Django project structure %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Django project structure}
+\section{Project structure}
 Django as a framework determines the structure of the whole system. Django project is divided into logical parts - apps.
 Apps contain a set of modules with classes, that implement interfaces and extend classes, that are provided by Django.
+
+Later in this section, the main modules of the apps in the Django project will be described. The parts involved in
+processing of the request for the receiving of the user's wishes, will be taken as an example.
 
 \subsection{Django models}
 Django models is an interface for simplified querying to database. All models extend class \class{model} from
 \module{django.db} module and usually represent single table in a database \cite{djangodocs}.
 
+Thus, each app except the feed and notifications contains a module \module{models}. In this module there are models that
+completely describe the database. Despite what kind of DBMS is used (PostgreSQL or SQLite) the Django models and quering
+through them does not change, which simplifies development, testing and deploy.
+
+Model that represent table \class{Wish} in the database:
+\begin{lstlisting}
+class Wish(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.CharField(max_length=512)
+    amount_needed = models.FloatField()
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_of_expiration = models.DateTimeField(null=True)
+    date_completed = models.DateTimeField(null=True)
+    is_public = models.BooleanField(default=False)
+    author = models.ForeignKey(User,
+                               on_delete=models.CASCADE,
+                               related_name='wishes')
+
+    class Meta:
+        db_table = 'Wish'
+
+\end{lstlisting}
 
 \subsection{Django views}
+Django view is a method that is called during request on certain \ac{URL}. This function takes a Web request and returns
+a Web response, in this case JSON. The main logic of processing requests is in the views.
+
+Before we started using Django REST framework, the request on receiving the wish list of the current user looked like
+this:
+\begin{lstlisting}
+def current_user_wishes_view(request):
+    current_user = request.user
+    if not user.is_authenticated():
+        return HttpResponse('Unauthorized', status=401)
+
+    current_user_wishes = current.user.wishes. \
+                                     order_by('-date_created')
+
+    response_data = []
+    for wish in current_user_wishes:
+        serialized_wish = WishSerializer(wish).data
+        response_data.append(serialized_wish)
+
+    paginated_response = WishPagination(). \
+               get_paginated_response(request, response_data)
+
+    return JsonResponse(paginated_response)
+
+\end{lstlisting}
+Similar requests to obtain a list of objects of a certain model (wishes, donations, comments, etc.) look very similar.
+It is checked if the user is authenticated, the data queryset is obtained, the data is serialized, paginated (divided
+into pages), returned in the \ac{JSON} format. To simplify the implementation of such requests and the corresponding
+auxiliary classes (serializers, paginations, etc.), it was decided to use the Django REST framework.
+
+Thus, in Django REST framework view on getting the current user's wish list looks like this:
+
+\begin{lstlisting}
+class CurrentUserWishesView(generics.ListCreateAPIView):
+    renderer_classes = (renderers.JSONRenderer,)
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = serializers.WishSerializer
+    pagination_class = pagination.WishPagination
+
+    def get_queryset(self):
+        user = self.request.user
+        return user.wishes.order_by('-date_created')
+\end{lstlisting}
+
+This approach simplifies implementation and improves the readability of the code.
 
 
+\subsection{Django urls}
+The \module{urls} module in Django is responsible for linking the \ac{URL} endpoints to their corresponding views. It
+contains a list of objects \class{url}. In \app{wishes} app it looks like this:
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Social integration %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Social integration}
+\begin{lstlisting}
+urlpatterns = [
+    url(r'wishes/', CurrentUserWishesView.as_view()),
+    # other urls
+]
+\end{lstlisting}
 
+
+\subsection{Django REST serializers}
+Django REST serializers is an interface that provides the Django REST framework for simplifying the serialization and
+desirilization of instances of Django models. The simplest wish serializer looks like this:
+\begin{lstlisting}
+class WishSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Wish
+        fields = '__all__'
+        read_only_fields = ('id', 'author', 'date_created',
+                            'date_completed', 'amount_gathered',
+                            'donators_count')
+\end{lstlisting}
+
+
+\subsection{Django REST pagination}
+To avoid large responses in the case of a large number of objects in the queryset, it was decided to use pagination.
+Pagination is the partitioning of the response into so-called pages of the same size. To create a class responsible for
+the pagination of the list of data, it is enough to extend the \class{PageNumberPagination} class from the module
+\module{rest\_framework.pagination}:
+
+\begin{lstlisting}
+class WishPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 50
+\end{lstlisting}
+
+If this class is used as \field{pagination\_class} in the view, \field{page\_size} and \field{page} are used in the
+\ac{URL} as optional parameters. So on the request "/wishes?page\_size=5\&page=2" server will respond with \ac{JSON} in
+following format:
+
+\begin{lstlisting}
+{
+  "count": 13,
+  "next": "https://api.elateme.com/wishes?page_size=5&page=3",
+  "previous": "https://api.elateme.com/wishes?page_size=5&page=1",
+  "results": [
+    # 5 serialized wishes from the second page
+  ]
+}
+\end{lstlisting}
+
+
+\subsection{Django apps}
+The project was divided into the following apps:
+
+\begin{itemize}
+
+\appitem{account} This app includes modules for storing and processing information about the user. \app{account} is
+divided into sub-applications \app{authorization} and \app{social} that are responsible for user authorization and
+integration with social networks respectively.
+\appitem{donations} This app is designed to process donations. It will also contain the logic of the payment and refund
+systems.
+\appitem{feed} App for the arrangement of a user's news feed.
+\appitem{friendship} Application for the processing of friendly relationships between users.
+\appitem{notifications} App provids user notifications. At the moment, it provides the REST interface for getting news
+list. Later this application will work with push-notifications.
+\appitem{wishes} Application provids interface for processing user wishes. It also contains sub-application \app{comments}.
+
+\end{itemize}
+
+\subsection{Django settings?}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Integration with Facebook %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Integration with Facebook}
+%Во время имплементации интеграции с фейсбуком я встретился с определенными проблемами. Как было сказанно раньше для
+%получения информации о пользователе от фейсбука нужен токен с наставлеными определенными правами доступа. После того
+%как сервер получает токен от мобильного приложения, он пытается послать запрос на фейсбук для получения информации
+%о юзере. На запрос:
+%\begin{lstlisting}
+%https://graph.facebook.com/v2.8/me
+%      ?access_token={access_token}
+%      &fields=id,first_name,last_name,email,birthday,gender,picture.type(large)
+%      &format=json
+%\end{lstlisting}
+%
+%сервер ожидает ответа в таком виде:
+%
+%\begin{lstlisting}
+%{
+%  "id": "549812695199357",
+%  "first_name": "Yevhen",
+%  "last_name": "Kuzmovych",
+%  "email": "kuzmovich.goog@gmail.com",
+%  "birthday": "10/16/1995",
+%  "gender": "male",
+%  "picture": {
+%    "data": {
+%      "is_silhouette": false,
+%      "url": "http://pbs.twimg.com/tweet_video_thumb/CWsuOWzWEAAiFku.png"
+%    }
+%}
+%}
+%\end{lstlisting}
+%
+%Но в сучае если на аксес токене не наставлены подходящие права, например на имэил, фэйсбук не отвечает ошибкой, а
+%отправляет респонс без поля имеил.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Python Virtual Environment %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Python Virtual Environment}
+Since this application uses a set of dependencies that don’t come as part of the python standard library they must be
+installed for all instances of the application, namely the development and testing on the local machines of developers
+and on the production server. Python Virtual Environment was used for these purposes.
+
+A Virtual Environment is a tool to keep the dependencies required by different projects in separate places, by
+creating virtual Python environments for them. It solves the “Project X depends on version 1.x but, Project Y
+needs 4.x” dilemma, and keeps your global site-packages directory clean and manageable.\cite{pythonvenv}
+
+A list of all the dependencies that are installed in the virtual environment can be found in the \file{requirements.txt}
+file in the project's root directory. The guide for installing and configuring the virtual environment is described in
+the installation guide in the attachments.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Payments %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Payments}
 

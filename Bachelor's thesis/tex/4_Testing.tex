@@ -1,3 +1,4 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Unit tests %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Unit tests}
 Alongside with the development automatic testing was performed using unit tests. Unit tests are designed to verify the
 correct functioning of the parts of the application.
@@ -16,16 +17,16 @@ are class-based. Every test case is a method of the class, that extends \class{A
 \item{tearDown}: Method called immediately after the test method has been called and the result recorded.
 \end{itemize}
 
-For testing, Django creates a separate empty database independent of the main database. Sqlite DBMS is used, for testing
+For testing, Django creates a separate empty database independent of the main database. Sqlite DBMS is used for testing
 in this project.
 
 \subsection{Auxiliary methods}
 For testing of the server API, I wrote a set of auxiliary methods that simulate HTTP requests to the server. This
-methods take URL to which the requester is sent and optionaly information (JSON) which is sent as the body of the
+methods take URL to which the requeste is sent and optionaly information (JSON) which is sent as the body of the
 request. Methods use \class{APIRequestFactory} to perform requests to the server.
 
 Methods also use \method{force\_authenticate} function that allows to authenticate user (in this case test user) in the
-system without involvement of Facebook. This function is used for testing of request that require authorization.
+system without involvement of Facebook. This function is used for testing of requests that require authorization.
 
 
 \subsection{Test cases}
@@ -67,12 +68,121 @@ class WishesTest(APITestCase):
     self.assertEqual(response_data['amount'], wish_data['amount'])
     self.assertEqual(Wish.objects.get().title, wish_data['title'])
 
-
-
 \end{lstlisting}
 
 This is a positive test, so the status code must be 201 (created), wish should be created and added to the database.
 
 
+
+\newcommand{\flag}[1]{
+\item[]-\textbf{#1}
+}
+
+\newcommand{\bnitem}[1]{
+\item\textbf{#1}.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Apachebench %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Apachebench}
+Apachebench tool was used to test server performance. Apachebench is a open source, single-threaded command line program
+for benchmarking a web server.
+
+Tests were conducted on different \ac{URL}s, with different methods including GET and POST. Example of a testing will be
+GET request on "wishes/" \ac{URL}, that returns list of wishes of the current user. It is one of the most popular
+requests. During the GET request on this \ac{URL}, the server makes one SELECT-WHERE request to the database.
+
+Testing command looks like this:
+
+\begin{lstlisting}
+HEADERS=(
+        "Authorization: Token b0edca023c283518f20b368947085bc4a82da8a8" \
+        "User-Agent: test-agent"\
+        )
+URL="https://api.elateme.com/wishes/"
+
+curl -sL -w "%{http_code}" "${HEADERS[@]/#/-H}" "$URL" -o /dev/null
+
+ab -c 100 -n 5000 "${HEADERS[@]/#/-H}" "$URL"
+\end{lstlisting}
+Before testing itself, it is checked, with the \bash{curl} utility, if the headers and \ac{URL} are valid and it is
+possible to get a successfull responce with them.
+
+In this case, \bash{curl} should print "200", which means a successful request. Further testing with the same headers
+and \ac{URL} is conducted. The ab (Apachebench) utility offers two main flags:
+
+\begin{itemize}
+\flag{c} Number of multiple requests to perform at a time.
+\flag{n} Number of requests to perform for the benchmarking session.
+\end{itemize}
+
+This test sends 5000 requests to the server with 100 simultaneous connections.
+
+After testing, ab writes out the statistics, which includes time taken for tests, requests per second, average per
+request, etc. The main analyzed indicator was "requests per second".
+
+\subsection{Testing results and optimisation}
+After the first test, the request per second rate was about 25, which is a very low rate.
+
+To optimize the performance of the server, it is necessary to find a bottleneck point. There are several possible
+problematic places:
+
+\begin{itemize}
+\bnitem{Database} Slow connection, long requests processing.
+\bnitem{Django} Unsuitable Django configuration.
+\bnitem{Gunicorn} Unsuitable configuration of Gunikorn, wrong number of workers, slow logging, etc.
+\bnitem{Nginx} Incorrect proxy configuration, wrong number of workers, logging, caching, static files, etc.
+\bnitem{Hardware} Low hardware performance.
+\end{itemize}
+
+
+To find a problematic place, it is necessary to test each of the above-mentioned parts separately.
+
+\subsection{Database test}
+Database testing is quite simple: sending a large number of requests and timing duration of execution. This was done
+directly through Django to test all the parts involved in connecting to the database at once (Django, python,
+PostgreSQL).
+
+The test looks like this:
+
+\begin{lstlisting}
+def test_db(requests_per_user):
+    start = datetime.now()
+    users = User.objects.all()
+    for i in range(requests_per_user):
+        for u in users:
+            wishes = u.wishes.all()
+    time = (datetime.now() - start).total_seconds()
+    total_requests = requests_per_user * users.count()
+    print(total_requests, 'requests per', time, 'seconds')
+    print(total_requests/time, 'req/sec')
+
+test_db(1000)
+\end{lstlisting}
+
+The test checks how long it takes to get each user's wishes separately from the database 1000 times. At the time of
+testing, 23 users were stored in the database with 5 to 30 wishes each.
+
+Output of the test:
+
+\begin{lstlisting}
+23000 requests per 7.23 seconds
+3178.34 req/sec
+\end{lstlisting}
+
+As seen, the database is capable of serving more than three thousand requests per second, so the problem is not in it.
+
+
+\subsection{Django test}
+To test Django separately from nginx (without a proxy), it was enough to run the Apachebench locally on the port on which
+Django server is running:
+
+\begin{lstlisting}
+URL="127.0.0.1:8888/wishes/"
+ab -c 20 -n 1500 "${HEADERS[@]/#/-H}" "$URL"
+\end{lstlisting}
+
+This test showed that one instance of the Django server itself serves about 11 requests per second. This indicates that
+the problem is in Django.
+
+Unfortunately, solutions to this problem was not found. With the help of changing server configurations, optimizing
+Gunicorn and nginx, it was possible to increase the performance almost twice, up to 50 requests per second. But the main
+problem was not solved.
 
