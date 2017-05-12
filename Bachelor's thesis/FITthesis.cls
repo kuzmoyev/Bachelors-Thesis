@@ -17,7 +17,7 @@
 }
 \DeclareOption{english}{
 	\AtBeginDocument{\selectlanguage{UKenglish}}
-	\PassOptionsToPackage{UKenglish}{babel}
+	\PassOptionsToPackage{czech,UKenglish}{babel}
 	\def\@lang{0}
 }
 \DeclareOption{slovak}{
@@ -417,7 +417,9 @@ sp\^ osobom, ktor\'y nezni\v zuje hodnotu Diela (vr\'atane komer\v cn\'eho vyu\v
 \DeclareRobustCommand{\abstractpage}{
 	\chapter*{Abstrakt}
 	\if@abstractcsdefined
+		\begin{otherlanguage}{czech}
 		\theabstractcs
+		\end{otherlanguage}
 	\else
 		\ClassError{FITthesis}{Abstract in Czech unspecified}{Specify abstract in Czech language using the \abstractCS command.}
 	\fi

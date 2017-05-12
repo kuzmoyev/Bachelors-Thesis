@@ -23,17 +23,43 @@
 
 \department{Department of Software Engineering}
 \title{ElateMe - Backend}
-\authorGN{Yevhen} %author's given name/names
-\authorFN{Kuzmovych} %author's surname
-\author{Yevhen} %author's name without academic degrees
-\authorWithDegrees{Yevhen Kuzmovych} %author's name with academic degrees
+\authorGN{Yevhen}
+\authorFN{Kuzmovych}
+\author{Yevhen}
+\authorWithDegrees{Yevhen Kuzmovych}
 \supervisor{Ing. Ji{\v r}{\' i} Chludil}
-\acknowledgements{THANKS (remove entirely in case you do not with to thank anyone)}
-\abstractEN{Summarize the contents and contribution of your work in a few sentences in English language.}
-\abstractCS{V n{\v e}kolika v{\v e}t{\' a}ch shr{\v n}te obsah a p{\v r}{\' i}nos t{\' e}to pr{\' a}ce v {\v c}esk{\' e}m jazyce.}
+\acknowledgements{I would like to thank the supervior of the work, Ing. Ji{\v r}{\' i} Chludil for help in writing of
+this thesis, valuable advice and suggestions for improvement, and Michal Maněna, supervisor of ElateMe project, for
+managing the practical part of the work. I would also like to thank development team of ElateMe project namely Georgii
+Solovev, Maksym Balatsko, Yegor Terokhin and Gleb Arkhipov.
+
+I want to express my special gratitude to my family, especially my parents, for their great support and help throughout
+the whole study and writing of this work.}
+
+\abstractEN{ElateMe is a new crowdfunding platform with elements of the social network.
+
+ This thesis focuses on
+development of the backend REST API for the aforementioned project. The aim of this work was to define and document the
+functional and non-functional requirements for the system under development, to analyze use cases and the overall
+structure of the project. Author also analyzes the external systems used by this application, such as the Facebook Graph
+API, the interfaces of the online payment systems like FIO-banka and Bitcoin, the operating system push notification
+services of Apple(APNs) and Google(GCM). In the framework of this work, the database structure and server-side
+application architecture were designed and the backend interface for communication with mobile and web applications was
+implemented using popular web development tools such as Python programming language, Django web framework and PostgreSQL
+DBMS. After that, the application undergone unit and performance testing.}
+
+\abstractCS{ElateMe je nová crowdfundingová platforma s elementy socialni sítě. Tato diplomová práce se zaměřuje na
+vývoj backend REST API pro výše uvedený projekt. Cílem této práce bylo definovat a zdokumentovat funkční a nefunkční
+požadavky pro systém ve vývoji, analyzovat případy  užití a celkovou strukturu projektu. Autor také analyzuje externí
+systémy používané touto aplikací, jmenovitě Facebook Graph API, rozhraní online platebních systémů, jako FIO-banka a
+Bitcoin, služby push oznámení Apple(APNs) a Google(GCM). V rámci této práce byla navržena struktura databáze a
+architektura serverove aplikace a bylo realizováno backend rozhraní pro komunikaci s mobilními a webovými aplikacemi
+pomocí populárních nástrojů pro vývoj webových aplikací, jako je programovací jazyk Python, Django web framework a
+\mbox{PostgreSQL} DBMS. Nakonec aplikace byla podrobena jednotkovým (unit) a výkonovým testům.}
+
 \placeForDeclarationOfAuthenticity{Prague}
-\keywordsCS{Replace with comma-separated list of keywords in Czech.}
-\keywordsEN{ElateMe, crowdfunding platform, social network, back-end API, RESTful, payments systems}
+\keywordsCS{ElateMe, crowdfundingová platforma, sociální síť, backend API, RESTful, online payments systems\newpage}
+\keywordsEN{ElateMe, crowdfunding platform, social network, backend API, RESTful, online platební systémy}
 \declarationOfAuthenticityOption{1} %select as appropriate, according to the desired license (integer 1-6)
 % \website{http://site.example/thesis} %optional thesis URL
 
@@ -47,8 +73,9 @@
     \centerline{\includegraphics[width=#1\textwidth]{#2.#3}}
 }
 
-% \image[size]{diagram and lable name}{extention}{caption}
-% \image[1.3]{component_diagram}{pdf}{Component diagram}
+% Usage:
+%    \image[size]{diagram and lable name}{extention}{caption}
+%    \image[1.3]{component_diagram}{pdf}{Component diagram}
 \newcommand{\image}[4][1]{
 \begin{figure}[H]
     \smplimage[#1]{#2}{#3}
@@ -101,17 +128,21 @@
 
 \chapter{Acronyms}
 \begin{acronym}
-	\acro{API}{Application Programming Interface}
-	\acro{MVC}{Model-View-Controller}
-	\acro{SDK}{Software Development Kit}
-	\acro{HTTPS}{HyperText Transfer Protocol Secure}
-	\acro{URL}{Uniform Resource Locator}
-	\acro{DBMS}{DataBase Management System}
-	\acro{REST}{Representational State Transfer}
-	\acro{OSPNS}{Operating system push notification service}
-	\acro{GCM}{Google Cloud Messaging}
-	\acro{APNs}{Apple Push Notification service}
-	\acro{JSON}{JavaScript Object Notation}
+    \acro{API}{Application Programming Interface}
+    \acro{APNs}{Apple Push Notification service}
+    \acro{DBMS}{DataBase Management System}
+    \acro{DMZ}{Demilitarized Zone}
+    \acro{GCM}{Google Cloud Messaging}
+    \acro{GSM}{Global System for Mobile Communications}
+    \acro{HTTPS}{HyperText Transfer Protocol Secure}
+    \acro{HTTP}{HyperText Transfer Protocol}
+    \acro{JSON}{JavaScript Object Notation}
+    \acro{MVC}{Model-View-Controller}
+    \acro{OSPNS}{Operating system push notification service}
+    \acro{REST}{Representational State Transfer}
+    \acro{SDK}{Software Development Kit}
+    \acro{URL}{Uniform Resource Locator}
+    \acro{VPS}{Virtual Private Server}
 \end{acronym}
 
 

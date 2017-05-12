@@ -9,9 +9,9 @@ requirements to the system, their systematization, detection of dependencies, an
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% SP1 and SP2 subjects %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{BI-SP1 and BI-SP2 subjects}
 The work on the ElateMe project started within the framework of the BI-SP1~subject. Our development team devided into
-groups: Android, iOS and Back-end developers. Our task was to define and document main client's
+groups: Android, iOS, Backend developers and architect. Our task was to define and document main client's
 requirements, implement functioning prototypes of mobile applications and back-end server \ac{API}. During
-BI-SP1~subject, Maksym Balatsko was working on prototype of back-end server, so choise of used technologies was up to
+BI-SP1~subject, Maksym Balatsko was working on prototype of backend server, so choise of used technologies was up to
 him. Then the technology stack was agreed with supervisor of the project. Chosen technologies will be discussed in
 the next chapter.
 
@@ -21,11 +21,9 @@ on which Maksym and I worked, has started.
 
 
 \newcounter{reqcounter}[section]
-\newcommand{\req}[2]{
-\par\stepcounter{reqcounter}
-\indent\par
-\textbf{#1\arabic{reqcounter}: #2}
-}
+\newcommand{\req}[2]{\setlength\itemsep{-0.1em}
+\stepcounter{reqcounter}
+\item[\textbf{#1\arabic{reqcounter}}] \textbf{#2}.}
 \newcommand{\funcreq}[1]{\req{F}{#1}}
 \newcommand{\nonfreq}[1]{\req{N}{#1}}
 
@@ -35,7 +33,8 @@ Functional requirements specify the behaviors the product will exhibit under spe
 the developers must implement to enable users to accomplish their task (user requirements), thereby satisfying the
 business requirements. \cite{funcreq}
 
-\subsection{Authorization}
+\subsection*{Authorization}
+\begin{itemize}
 \funcreq{Sign up via Facebook}
 User shall be able to sign up to ElateMe application with his Facebook account. Application shall load user's data
 such as name, surname, email, date of birth, etc.
@@ -45,18 +44,24 @@ application.
 \funcreq{Load friends from social network}
 On initial login application shall load list of user's friends that are already signed up in this application. This
 users shall be considered as friends in ElateMe application.
+\end{itemize}
 
-\subsection{Friendship management}
+\subsection*{Friendship management}
+
+\begin{itemize}
 \funcreq{View friends list}
 User shall be able to view list of his Facebook friends that are already signed up in application.
 \funcreq{Create friends group}
 User shall be able to create friends group. Groups shall be used for simplification of friends management.
 \funcreq{Delete friends group}
 User shall be able to delete friends group.
+\end{itemize}
 
-\subsection{Wish management}
+\subsection*{Wish management}
+
+\begin{itemize}
 \funcreq{Create wish}
-User shall be able to create wish, set it's title, description, price(amount of money that he(user) wants to gather),
+User shall be able to create wish, set it's title, description, price (amount of money that he(user) wants to gather),
 and deadline.
 \funcreq{Delete wish}
 User shall be able to delete his wish if nobody shall have donated money yet.
@@ -69,24 +74,33 @@ User shall be able to create surprise wish for one of his friends. In this case 
 shall not have acces to it and shall not know about it until the whole amount is collected.
 \funcreq{View contributed wishes list}
 User shall be able to view list of wishes he will have contributed to.
+\end{itemize}
 
-\subsection{Feed}
+\subsection*{Feed and notifications}
+\begin{itemize}
 \funcreq{View user's feed}
 User shall recieve feed with latest wishes of his friends.
+\funcreq{View user's notifications}
+User shall recieve information about the state of his wishes, new donations, comments, etc. via push-notifications.
+\end{itemize}
 
-\subsection{Donation management}
+\subsection*{Donation management}
+\begin{itemize}
 \funcreq{Donate to wish}
 User shall be able to financially contribute to wishes of his friends.
 \funcreq{Refund}
 In the case of the closure of the wish, all gatherd money shall be refunded to donators.
+\end{itemize}
 
-\subsection{Comments management}
+\subsection*{Comments management}
+\begin{itemize}
 \funcreq{View wishes comments list}
 User shall be able to view list of comments under the wish he will be browsing.
 \funcreq{Comment wish}
 User shall be able to leave a comment under the wish.
 \funcreq{Delete comment}
 User shall be able to delete his comment.
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Non-functional requirements %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Non-functional requirement}
@@ -95,17 +109,20 @@ will do it, for example, software performance requirements, software external in
 constraints and software quality attributes. Non-functional requirements are difficult to test; therefore they are
 usually evaluated subjectively.\cite{nonfuncreq}
 
-\subsection{Back-end \ac{API}}
-\nonfreq{\ac{REST}ful}
+\subsection*{Back-end \ac{API}}
+\begin{itemize}
+\nonfreq{\acs{REST}ful}
 Back-end API shall follow architectural constraints of REST architectural style.
-\nonfreq{\ac{HTTPS}}
+\nonfreq{\acs{HTTPS}}
 Server shall comunicate with client via \ac{HTTPS}.
 \nonfreq{PostgreSQL database}
 PostgreSQL shall be used as the main DBMS.
 \nonfreq{Performance}
 Server shall be able to serve 1500 requests per second.
+\end{itemize}
 
-\subsection{Payments}
+\subsection*{Payments}
+\begin{itemize}
 \nonfreq{FIO-bank}
 User shall be able to make payments via FIO-bank.
 \nonfreq{Bitcoin}
@@ -115,6 +132,7 @@ System shall ensure secure payments.
 \nonfreq{Consistency}
 Servers data about payments shall be consistent with data in payments systems (FIO-bank, Bitcoin, etc.).
 System shall react accordingly to errors appeared during payments.
+\end{itemize}
 
 
 
@@ -133,6 +151,8 @@ Use cases were defined after analising of functional and non-functional requirem
 better undestending of functionality required from the system. Use cases model of this application is presented on the
 diagram \ref{fig:use_cases_diagram}.
 
+\image[1.3]{use_cases_diagram}{pdf}{Use cases diagram}
+
 Use case model includes the following components:
 
 \begin{itemize}
@@ -145,7 +165,7 @@ The main actors of this system are:
 \ucactor{Facebook} participates in user authorization and provides an interface for obtaining the necessary information
 about him (user).
 \ucactor{Payment system} participates in payments, namely donations and refundances. In the role of payment systems in
-this application are Fio-Banka and Bitcoin.
+this application are FIO-Banka and Bitcoin.
 \end{itemize}
 
 \uccomponent{Use cases} represent the functionality that the system provides for actors. In this diagram they are
@@ -161,13 +181,18 @@ subsequent refandation, etc.
 
 \end{itemize}
 
-\image[1.3]{use_cases_diagram}{pdf}{Use cases diagram}
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Domain model %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Domain model}
-** insert Domain model diagram **
+For simplification of understanding of the main domain classes and their behavior, it was desided to define so-called
+Domain model. Domain model is visual representation of conceptual classes in a domain of interests. Domain model is
+visualization of things in real-world, not of software components such as C++ or Python class.\cite{domainmodel}
+
+Domain model \ref{fig:domain_model} was created by Maksym Balatsko, team lead and advert server developer of ElateMe. In
+his bachelor's thesis\cite{adserver} he describes in detail this diagram, classes specified in it, their atributes, and
+associations between them.
+
+\image[1.1]{domain_model}{pdf}{Domain model \cite{adserver}}
 
 
 
@@ -194,8 +219,8 @@ of my work, so their design and implementation will not be described in this the
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Authentication %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Authentication}
 User has to be authorized to use the application. ElateMe application will not provide in-app registration. User
-authentication will be conducted exclusively through third-party systems. It is made to simplify the
-registration in the application.
+authentication will be conducted exclusively through third-party systems. It is made to simplify the registration in
+the application.
 
 
 \subsection{Facebook}
@@ -263,9 +288,9 @@ called bitcoins are used to store and transmit value among participants in the b
 communicate with each other using the bitcoin protocol primarily via the Internet, although other transport networks can
 also be used. The bitcoin protocol stack, available as open source software, can be run on wide range of computing
 devices, including laptops and smartphones, making the technology easily accessible \cite{bitcoin}. A detailed analysis
-of the system of Bitcoins was carried out in the bachelor work \cite{ios1} of Yegor Terokhin, one of the iOS developers
-of ElateMe. In his work he describes in detail the principles of work of Bitcoins and the benefits of using this system
-in the framework of the ElateMe project.
+of the system of Bitcoins was carried out in the bachelor's thesis of Yegor Terokhin \cite{ios1}, one of the iOS
+developers of ElateMe. In his work he describes in detail the principles of work of Bitcoins and the benefits of using
+this system in the framework of the ElateMe project.
 
 To make payments using Bitcoins, it was decided to use Coinbase. Founded in June of 2012, Coinbase is a digital currency
 wallet and platform where merchants and consumers can transact with new digital currencies like bitcoin and ethereum
@@ -273,13 +298,32 @@ wallet and platform where merchants and consumers can transact with new digital 
 used for the implementation of the backend in this project.
 
 \subsection{Refund mechanism}
-%Как было сказано ранее, рефунданция происходит в случае закрытия виша. Виш закрывается в двух ситуациях.
-%
-%
-%Принцыпы рефунданцы платежей фио-банки и
-%биткоинов довольно просты и похожи. Каждый платеж в обоих системах имеет свой идентификатор (трансакшн_ид) по которому
-%и проводится рефунданция через веб-АПИ в случае фио-банки и через Coinbase СДК в случае биткоинов.
+As was mentioned before, after closing of the wish, collected money will be refunded to the donators' accounts. ElateMe
+will have bank account or online wallet for every payment system that it will provide. As every payment system has
+different interface for conducting payments, every donation and its refund will use different way of payment processing,
+depending on available interface for each particular system. There are three possible solutions on processing refunds:
 
+\begin{itemize}
+    \item \ac{SDK} (e.g. Coinbase \ac{SDK})
+    \item \ac{HTTP} \ac{API} (e.g. FIO-banka \ac{API})
+    \item Web user interface (e.g. mBank)
+\end{itemize}
+
+As long as payment system provides \ac{SDK} or any other \ac{API}, the implementation of donation and refunds processing
+does not require complicated systems to conduct payments. On the current stage of development it was decided to use only
+FIO-banka and Bitcoin, which provide appropriate interfaces. But in case of the addition of payment systems that don't
+have \ac{API} for developers, payments, and refundations in particular, need to be processed through other available
+interfaces.
+
+Following solution was proposed by Michal Maněna, project supervisor of ElateMe.
+
+User web interfaces of payment systems that don't provide apropriate \ac{API} will be used for conducting refunds. It
+was decided to use Selenium for automatization of payments via user web interface. Selenium is a set of tools
+specifically for automating web browsers \cite{selenium}. So it will simulate actions directly in web browser to provide
+refunds to the users' bank accounts. Here it is necessary to reckon with the fact that many banks send a confirmation
+code via SMS. In this case, it is necessary to have a \ac{GSM} module with a SIM card physically connected to the
+server. Then there will be running daemon that will collect and save the SMS messages in the database. Then confirmation
+code will be entered in the corresponding field by Selenium and sent to process payment.
 
 
 \section{Push notifications}

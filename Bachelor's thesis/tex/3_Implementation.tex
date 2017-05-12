@@ -1,13 +1,14 @@
 This chapter contains a description of the implementation of the project's server side. This chapter will describe the
-structure of the project, the problems arose during implementation and ways to solve them. There will also be described
-guide for the installation, launch and deployment of this project.
+structure of the project. It is intended to familiarize the reader with the implementation of this application and to
+simplify the understanding of the structure of the project for future developers.
 
-This chapter is intended to familiarize the reader with the implementation of this application and to simplify the
-understanding of the structure of the project for future developers.
-
+Note that installation guide for this application is in the attachments.
 
 
 \newcommand{\appitem}[1]{
+\item\textbf{#1}.
+}
+\newcommand{\setitem}[1]{
 \item\textbf{#1}.
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Django project structure %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -166,43 +167,35 @@ list. Later this application will work with push-notifications.
 
 \end{itemize}
 
-\subsection{Django settings?}
+\subsection{Django settings}
+Django \module{settings} is a module that contains all the configuration of the Django project. The main configurations
+to notice are:
 
+\begin{itemize}
+    \setitem{INSTALLED\_APPS} A list of all apps in a project.
+    \setitem{ALLOWED\_HOSTS} A list of the host/domain names that this Django site can serve.
+    \setitem{DATABASES} A dictionary containing the settings for all databases to be used with Django.
+    \setitem{DEBUG} A boolean that turns on/off debug mode.
+\end{itemize}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Integration with Facebook %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Integration with Facebook}
-%Во время имплементации интеграции с фейсбуком я встретился с определенными проблемами. Как было сказанно раньше для
-%получения информации о пользователе от фейсбука нужен токен с наставлеными определенными правами доступа. После того
-%как сервер получает токен от мобильного приложения, он пытается послать запрос на фейсбук для получения информации
-%о юзере. На запрос:
-%\begin{lstlisting}
-%https://graph.facebook.com/v2.8/me
-%      ?access_token={access_token}
-%      &fields=id,first_name,last_name,email,birthday,gender,picture.type(large)
-%      &format=json
-%\end{lstlisting}
-%
-%сервер ожидает ответа в таком виде:
-%
-%\begin{lstlisting}
-%{
-%  "id": "549812695199357",
-%  "first_name": "Yevhen",
-%  "last_name": "Kuzmovych",
-%  "email": "kuzmovich.goog@gmail.com",
-%  "birthday": "10/16/1995",
-%  "gender": "male",
-%  "picture": {
-%    "data": {
-%      "is_silhouette": false,
-%      "url": "http://pbs.twimg.com/tweet_video_thumb/CWsuOWzWEAAiFku.png"
-%    }
-%}
-%}
-%\end{lstlisting}
-%
-%Но в сучае если на аксес токене не наставлены подходящие права, например на имэил, фэйсбук не отвечает ошибкой, а
-%отправляет респонс без поля имеил.
+Complete list of settings available in Django can be found in the oficial documetation \cite{djangosettings}.
+
+As for development and deployment it is needed to have different configuratiouns for allowed hosts, databases and
+debuging, in the \file{server\_api} folder, alongside with \module{setting} module there were created two modules:
+\module{prod\_settings} and \module{dev\_settings}. They contain specific configurations for production and development
+respectively. For example \module{dev\_settings} have configured SQLite database and set debug mode while
+\module{prod\_settings} defines settings for PostgreSQL and without debug mode. To enable \module{prod\_settings} it is
+needed to set environment variable \textit{PRODUCTION}. Otherwise \module{dev\_settings} will be used.
+
+Following lines were added to the main \module{settings} module to make it work:
+
+\begin{lstlisting}
+if os.environ.get('PRODUCTION', False):
+    from .prod_settings import *
+else:
+    from .dev_settings import *
+\end{lstlisting}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Python Virtual Environment %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -218,7 +211,3 @@ needs 4.x” dilemma, and keeps your global site-packages directory clean and ma
 A list of all the dependencies that are installed in the virtual environment can be found in the \file{requirements.txt}
 file in the project's root directory. The guide for installing and configuring the virtual environment is described in
 the installation guide in the attachments.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Payments %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Payments}
-

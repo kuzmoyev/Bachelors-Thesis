@@ -72,6 +72,8 @@ class WishesTest(APITestCase):
 
 This is a positive test, so the status code must be 201 (created), wish should be created and added to the database.
 
+\subsection{Results}
+
 
 
 \newcommand{\flag}[1]{
@@ -91,14 +93,14 @@ requests. During the GET request on this \ac{URL}, the server makes one SELECT-W
 
 Testing command looks like this:
 
-\begin{lstlisting}
+\begin{lstlisting}[language=bash]
 HEADERS=(
-        "Authorization: Token b0edca023c283518f20b368947085bc4a82da8a8" \
+        "Authorization: Token b0edca023c283518f20b36894708" \
         "User-Agent: test-agent"\
         )
 URL="https://api.elateme.com/wishes/"
 
-curl -sL -w "%{http_code}" "${HEADERS[@]/#/-H}" "$URL" -o /dev/null
+curl -sL "${HEADERS[@]/#/-H}" "$URL"
 
 ab -c 100 -n 5000 "${HEADERS[@]/#/-H}" "$URL"
 \end{lstlisting}
@@ -127,11 +129,10 @@ problematic places:
 \begin{itemize}
 \bnitem{Database} Slow connection, long requests processing.
 \bnitem{Django} Unsuitable Django configuration.
-\bnitem{Gunicorn} Unsuitable configuration of Gunikorn, wrong number of workers, slow logging, etc.
+\bnitem{Gunicorn} Unsuitable configuration of Gunicorn, wrong number of workers, slow logging, etc.
 \bnitem{Nginx} Incorrect proxy configuration, wrong number of workers, logging, caching, static files, etc.
 \bnitem{Hardware} Low hardware performance.
 \end{itemize}
-
 
 To find a problematic place, it is necessary to test each of the above-mentioned parts separately.
 
@@ -162,7 +163,7 @@ testing, 23 users were stored in the database with 5 to 30 wishes each.
 
 Output of the test:
 
-\begin{lstlisting}
+\begin{lstlisting}[language=]
 23000 requests per 7.23 seconds
 3178.34 req/sec
 \end{lstlisting}
@@ -171,18 +172,35 @@ As seen, the database is capable of serving more than three thousand requests pe
 
 
 \subsection{Django test}
-To test Django separately from nginx (without a proxy), it was enough to run the Apachebench locally on the port on which
-Django server is running:
+To test Django separately from nginx (without a proxy), it was enough to run the Apachebench locally on the port on
+which Django server is running:
 
-\begin{lstlisting}
+\begin{lstlisting}[language=bash]
 URL="127.0.0.1:8888/wishes/"
 ab -c 20 -n 1500 "${HEADERS[@]/#/-H}" "$URL"
 \end{lstlisting}
 
 This test showed that one instance of the Django server itself serves about 11 requests per second. This indicates that
-the problem is in Django.
+the problem is in Django and/or hardware performance. Same tests of this Django project on authors local machine showed
+much better results, about 350 requests per second.
 
-Unfortunately, solutions to this problem was not found. With the help of changing server configurations, optimizing
-Gunicorn and nginx, it was possible to increase the performance almost twice, up to 50 requests per second. But the main
-problem was not solved.
+
+\subsection{nginx test}
+To test nginx separately from Django application, it was enough to make virtualhost that served static page, test.html.
+Here is a testing of this page:
+
+\begin{lstlisting}[language=bash]
+ab -c 100 -n 5000 "https://api.elateme.com/test.html"
+\end{lstlisting}
+
+Results of this test showed similar rate as requests to the \ac{URL}s of server \ac{API}. This indicates that the
+problem is in nginx and/or hardware performance.
+
+
+\subsection{Results}
+Taking into consideration everything mentioned above the problem is presumably in server's hardware. Currently, server
+is running on the free \ac{VPS}, which is not designed for enterprise projects so testing on current server is not a
+true indicator of project performance. Therefore performance tests will be conducted again after backend application is
+deployed on full-fledged server.
+
 
