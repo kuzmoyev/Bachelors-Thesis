@@ -1,41 +1,29 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Unit tests %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Unit tests}
-Alongside with the development automatic testing was performed using unit tests. Unit tests are designed to verify the
-correct functioning of the parts of the application.
+Alongside with the development, automatic testing was performed using unit tests. Unit tests are designed to verify the correct functioning of the parts of the application.
 
-Unit testing code means validation or performing the sanity check of code. Sanity check is a basic test to quickly
-evaluate whether the result of calculation can possibly be true. It is a simple check to see whether the produced
-material is coherent. \cite{unittesting}
+Unit testing code means validation or performing the sanity check of code. Sanity check is a basic test to quickly evaluate whether the result of calculation can possibly be true. It is a simple check to see whether the produced material is coherent. \cite{unittesting}
 
 \subsection{Django REST tests}
-For testing, native tools were used, namely the Django REST framework tests. Similar to java JUnit tests Django tests
-are class-based. Every test case is a method of the class, that extends \class{APITestCase} from the module
-\module{rest\_framework.test}. Classes can also contain the following methods:
+Native tools were used, for testing, namely the Django REST framework tests. Similar to Java JUnit tests Django tests are class-based. Every test case is a method of the class, that extends \class{APITestCase} from the module \module{rest\_framework.test}. Classes can also contain the following methods:
 
 \begin{itemize}
 \item{setUp}: Method called to prepare the test fixture.
 \item{tearDown}: Method called immediately after the test method has been called and the result recorded.
 \end{itemize}
 
-For testing, Django creates a separate empty database independent of the main database. Sqlite DBMS is used for testing
-in this project.
+For testing, Django creates a separate empty database independent of the primary database. SQLite DBMS is used for testing in this project.
 
 \subsection{Auxiliary methods}
-For testing of the server API, I wrote a set of auxiliary methods that simulate HTTP requests to the server. This
-methods take URL to which the requeste is sent and optionaly information (JSON) which is sent as the body of the
-request. Methods use \class{APIRequestFactory} to perform requests to the server.
+I wrote a set of auxiliary methods that simulate HTTP requests to the server. These methods take URL to which the request is sent and optionally information (JSON) which is sent as the body of the request. Methods use \class{APIRequestFactory} to perform requests to the server.
 
-Methods also use \method{force\_authenticate} function that allows to authenticate user (in this case test user) in the
-system without involvement of Facebook. This function is used for testing of requests that require authorization.
+Methods also use \method{force\_authenticate} function that allows to authenticate a user (in this case test user) in the system without involvement of Facebook. This function is used for testing of requests that require authorization.
 
 
 \subsection{Test cases}
 As an example of a test, I'll take the creation of the wish by the user.
 
-Initially in the method \method{setUp} I create test user, after that I make a POST request to the server with
-information about the wish in the body of the request. After the server responded, I check status code of the response,
-compare the information between the body of the request and the body of the response (body of the response contains
-the newly created wish) and check that wish is added to the database.
+Initially, in the method \method{setUp} I create the test user, after that, I make a POST request to the server with information about the wish in the body of the request. After the server responded, I check status code of the response, compare the information between the body of the request and the body of the response (body of the response contains the newly created wish) and check that wish is added to the database.
 
 \begin{lstlisting}
 from django.urls import reverse
@@ -84,12 +72,9 @@ This is a positive test, so the status code must be 201 (created), wish should b
 \item\textbf{#1}.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Apachebench %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Apachebench}
-Apachebench tool was used to test server performance. Apachebench is a open source, single-threaded command line program
-for benchmarking a web server.
+Apachebench tool was used to test server performance. Apachebench is an open source, single-threaded command line program for benchmarking a web server.
 
-Tests were conducted on different \ac{URL}s, with different methods including GET and POST. Example of a testing will be
-GET request on "wishes/" \ac{URL}, that returns list of wishes of the current user. It is one of the most popular
-requests. During the GET request on this \ac{URL}, the server makes one SELECT-WHERE request to the database.
+Tests were conducted on various \ac{URL}s, with different methods including GET and POST. An example of a testing will be GET request on "wishes/" \ac{URL}, which returns a list of wishes of the current user. It is one of the most popular requests. During the GET request on this \ac{URL}, the server makes one SELECT-WHERE request to the database.
 
 Testing command looks like this:
 
@@ -104,11 +89,9 @@ curl -sL "${HEADERS[@]/#/-H}" "$URL"
 
 ab -c 100 -n 5000 "${HEADERS[@]/#/-H}" "$URL"
 \end{lstlisting}
-Before testing itself, it is checked, with the \bash{curl} utility, if the headers and \ac{URL} are valid and it is
-possible to get a successfull responce with them.
+Before testing itself, it is checked, with the \bash{curl} utility, if the headers and \ac{URL} are valid and it is possible to get a satisfactory response with them.
 
-In this case, \bash{curl} should print "200", which means a successful request. Further testing with the same headers
-and \ac{URL} is conducted. The ab (Apachebench) utility offers two main flags:
+In this case, \bash{curl} should print "200", which means a successful request. Further testing with the same headers and \ac{URL} is conducted. The ab (Apachebench) utility offers two main flags:
 
 \begin{itemize}
 \flag{c} Number of multiple requests to perform at a time.
@@ -117,14 +100,12 @@ and \ac{URL} is conducted. The ab (Apachebench) utility offers two main flags:
 
 This test sends 5000 requests to the server with 100 simultaneous connections.
 
-After testing, ab writes out the statistics, which includes time taken for tests, requests per second, average per
-request, etc. The main analyzed indicator was "requests per second".
+After testing, ab writes out the statistics, which includes time taken for tests, requests per second, average per request, etc. The primary analyzed indicator was "requests per second".
 
 \subsection{Testing results and optimisation}
-After the first test, the request per second rate was about 25, which is a very low rate.
+After the first test, the request per second rate was about 25, which is a very low result.
 
-To optimize the performance of the server, it is necessary to find a bottleneck point. There are several possible
-problematic places:
+Finding a bottleneck point is necessary to optimize the performance of the server. There are several possible problematic places:
 
 \begin{itemize}
 \bnitem{Database} Slow connection, long requests processing.
@@ -134,12 +115,10 @@ problematic places:
 \bnitem{Hardware} Low hardware performance.
 \end{itemize}
 
-To find a problematic place, it is necessary to test each of the above-mentioned parts separately.
+It is necessary to test each of the parts mentioned above separately, to find a problematic place.
 
 \subsection{Database test}
-Database testing is quite simple: sending a large number of requests and timing duration of execution. This was done
-directly through Django to test all the parts involved in connecting to the database at once (Django, python,
-PostgreSQL).
+Database testing is quite simple: sending a large number of requests and timing duration of execution. This was done directly through Django to test all the parts involved in connecting to the database at once (Django, Python, PostgreSQL).
 
 The test looks like this:
 
@@ -158,8 +137,7 @@ def test_db(requests_per_user):
 test_db(1000)
 \end{lstlisting}
 
-The test checks how long it takes to get each user's wishes separately from the database 1000 times. At the time of
-testing, 23 users were stored in the database with 5 to 30 wishes each.
+The test checks how long it takes to get each user's wishes separately from the database 1000 times. 23 users were stored in the database with 5 to 30 wishes each, at the time of testing.
 
 Output of the test:
 
@@ -172,35 +150,27 @@ As seen, the database is capable of serving more than three thousand requests pe
 
 
 \subsection{Django test}
-To test Django separately from nginx (without a proxy), it was enough to run the Apachebench locally on the port on
-which Django server is running:
+It was enough to run the Apachebench locally on the port on which Django server is running to test Django separately from Nginx (without a proxy):
 
 \begin{lstlisting}[language=bash]
 URL="127.0.0.1:8888/wishes/"
 ab -c 20 -n 1500 "${HEADERS[@]/#/-H}" "$URL"
 \end{lstlisting}
 
-This test showed that one instance of the Django server itself serves about 11 requests per second. This indicates that
-the problem is in Django and/or hardware performance. Same tests of this Django project on authors local machine showed
-much better results, about 350 requests per second.
+This test showed that one instance of the Django server itself serves about 11 requests per second. This indicates that the problem is in Django or hardware performance. Same tests of this Django project on authors local machine showed much better results, about 350 requests per second.
 
 
 \subsection{nginx test}
-To test nginx separately from Django application, it was enough to make virtualhost that served static page, test.html.
-Here is a testing of this page:
+It was enough to make virtualhost that served a static page to test Nginx separately from Django application. Here is a testing of this page:
 
 \begin{lstlisting}[language=bash]
 ab -c 100 -n 5000 "https://api.elateme.com/test.html"
 \end{lstlisting}
 
-Results of this test showed similar rate as requests to the \ac{URL}s of server \ac{API}. This indicates that the
-problem is in nginx and/or hardware performance.
+Results of this test showed similar rate as requests to the \ac{URL}s of server \ac{API}. This indicates that the problem is in Nginx or hardware performance.
 
 
 \subsection{Results}
-Taking into consideration everything mentioned above the problem is presumably in server's hardware. Currently, server
-is running on the free \ac{VPS}, which is not designed for enterprise projects so testing on current server is not a
-true indicator of project performance. Therefore performance tests will be conducted again after backend application is
-deployed on full-fledged server.
+Taking into consideration everything mentioned above the problem is presumably in server's hardware. Currently, the server is running on the free \ac{VPS}, which is not designed for enterprise projects, so testing on current server is not an accurate indicator of project performance. Therefore performance tests will be conducted again after backend application is deployed on the full-fledged server.
 
 

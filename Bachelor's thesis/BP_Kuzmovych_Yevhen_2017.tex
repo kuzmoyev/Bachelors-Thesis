@@ -28,38 +28,47 @@
 \author{Yevhen}
 \authorWithDegrees{Yevhen Kuzmovych}
 \supervisor{Ing. Ji{\v r}{\' i} Chludil}
-\acknowledgements{I would like to thank the supervior of the work, Ing. Ji{\v r}{\' i} Chludil for help in writing of
+\acknowledgements{I would like to thank the supervisor of the work, Ing. Ji{\v r}{\' i} Chludil for help in writing of
 this thesis, valuable advice and suggestions for improvement, and Michal Maněna, supervisor of ElateMe project, for
-managing the practical part of the work. I would also like to thank development team of ElateMe project namely Georgii
-Solovev, Maksym Balatsko, Yegor Terokhin and Gleb Arkhipov.
+managing the practical part of the work. I would also like to thank development team of the ElateMe project namely
+Georgii Solovev, Maksym Balatsko, Yegor Terokhin and Gleb Arkhipov.
 
 I want to express my special gratitude to my family, especially my parents, for their great support and help throughout
 the whole study and writing of this work.}
 
-\abstractEN{ElateMe is a new crowdfunding platform with elements of the social network.
+\abstractEN{ElateMe is a new crowdfunding platform with elements of the social network. Unlike other similar projects
+like Kickstarter or Patreon that help bring creative, commercial projects to life by means of interested people, ElateMe
+focuses on the fulfillment of personal wishes with the help of user’s friends. In ElateMe application, the user can
+share his wish, and his friends can help him by contributing financially. The development of this platform is a team
+project. The work is divided into the development of Android and iOS applications, REST API server and an advertising
+server.
 
- This thesis focuses on
-development of the backend REST API for the aforementioned project. The aim of this work was to define and document the
-functional and non-functional requirements for the system under development, to analyze use cases and the overall
-structure of the project. Author also analyzes the external systems used by this application, such as the Facebook Graph
-API, the interfaces of the online payment systems like FIO-banka and Bitcoin, the operating system push notification
-services of Apple(APNs) and Google(GCM). In the framework of this work, the database structure and server-side
-application architecture were designed and the backend interface for communication with mobile and web applications was
-implemented using popular web development tools such as Python programming language, Django web framework and PostgreSQL
-DBMS. After that, the application undergone unit and performance testing.}
+This thesis focuses on the development of the backend REST API for the project mentioned above. The aim of this work was
+to define and document the functional and non-functional requirements for the system under development, to analyze use
+cases and the overall structure of the project. The author also explains the external systems used by this application,
+such as the Facebook Graph API, the interfaces of the online payment systems like FIO-banka and Bitcoin, the operating
+system push notification services of Apple(APNs) and Google(GCM). In the framework of this work, the database structure
+and server-side application architecture were designed, and the backend interface for communication with mobile and web
+applications was implemented using modern web development tools such as Python programming language, Django web
+framework, and PostgreSQL DBMS. After that, the application has undergone unit and performance testing.}
 
-\abstractCS{ElateMe je nová crowdfundingová platforma s elementy socialni sítě. Tato diplomová práce se zaměřuje na
-vývoj backend REST API pro výše uvedený projekt. Cílem této práce bylo definovat a zdokumentovat funkční a nefunkční
-požadavky pro systém ve vývoji, analyzovat případy  užití a celkovou strukturu projektu. Autor také analyzuje externí
-systémy používané touto aplikací, jmenovitě Facebook Graph API, rozhraní online platebních systémů, jako FIO-banka a
-Bitcoin, služby push oznámení Apple(APNs) a Google(GCM). V rámci této práce byla navržena struktura databáze a
-architektura serverove aplikace a bylo realizováno backend rozhraní pro komunikaci s mobilními a webovými aplikacemi
-pomocí populárních nástrojů pro vývoj webových aplikací, jako je programovací jazyk Python, Django web framework a
-\mbox{PostgreSQL} DBMS. Nakonec aplikace byla podrobena jednotkovým (unit) a výkonovým testům.}
+\abstractCS{ElateMe je nová crowdfundingová platforma s elementy sociální sítě. Na rozdíl od jiných podobných projektů,
+jako jsou Kickstarter nebo Patreon, které podporují vývoj vývoj kreativních a komerčních projektů prostřednictvím zájemců,
+ElateMe je zaměřen na naplnění osobních přání s pomocí přátel uživatelů. V aplikaci ElateMe může uživatel sdílet své
+přání a jeho přátelé mu mohou pomoci tím, že finančně přispějí. Vývoj této platformy je týmovým projektem. Práce je
+rozdělena do vývoje Android a iOS aplikací, backend REST API a reklamního serveru.
+
+Tato diplomová práce se zaměřuje na vývoj backend REST API pro výše uvedený projekt. Cílem této práce bylo definovat a
+zdokumentovat funkční a nefunkční požadavky pro systém ve vývoji, analyzovat případy  užití a celkovou strukturu
+projektu. Autor také analyzuje externí systémy používané touto aplikací, jmenovitě Facebook Graph API, rozhraní online
+platebních systémů, jako jsou FIO-banka a Bitcoin, služby push notifikace Apple(APNs) a Google(GCM). V rámci této práce
+byla navržena struktura databáze a architektura serverové aplikace a bylo realizováno backend rozhraní pro komunikaci s
+mobilními a webovými aplikacemi pomocí populárních nástrojů pro vývoj web serverů, jako jsou programovací jazyk
+Python, Django web framework a PostgreSQL DBMS. Nakonec aplikace byla podrobena jednotkovým (unit) a výkonovým testům.}
 
 \placeForDeclarationOfAuthenticity{Prague}
-\keywordsCS{ElateMe, crowdfundingová platforma, sociální síť, backend API, RESTful, online payments systems\newpage}
-\keywordsEN{ElateMe, crowdfunding platform, social network, backend API, RESTful, online platební systémy}
+\keywordsCS{ElateMe, crowdfundingová platforma, sociální síť, backend API, RESTful, online platební systémy\newpage}
+\keywordsEN{ElateMe, crowdfunding platform, social network, backend API, RESTful, online payments systems}
 \declarationOfAuthenticityOption{1} %select as appropriate, according to the desired license (integer 1-6)
 % \website{http://site.example/thesis} %optional thesis URL
 
@@ -77,7 +86,7 @@ pomocí populárních nástrojů pro vývoj webových aplikací, jako je program
 %    \image[size]{diagram and lable name}{extention}{caption}
 %    \image[1.3]{component_diagram}{pdf}{Component diagram}
 \newcommand{\image}[4][1]{
-\begin{figure}[H]
+\begin{figure}[h]
     \smplimage[#1]{#2}{#3}
 	\caption{#4}
     \label{fig:#2}

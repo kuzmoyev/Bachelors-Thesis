@@ -1,24 +1,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Foreword %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-This chapter will focus on analysis of the project as a part of a software development that connects customer's
-requirements to the system and its following design and development.
+This chapter will focus on the analysis of the project as a part of a software development that connects customer's
+requirements to the system and its subsequent design and development.
 
-Analysis of software project is intended to define detailed description of the product, break it down into
+Analysis of software project is intended to define the detailed description of the product, break it down into
 requirements to the system, their systematization, detection of dependencies, and documentation.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% SP1 and SP2 subjects %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{BI-SP1 and BI-SP2 subjects}
-The work on the ElateMe project started within the framework of the BI-SP1~subject. Our development team devided into
-groups: Android, iOS, Backend developers and architect. Our task was to define and document main client's
-requirements, implement functioning prototypes of mobile applications and back-end server \ac{API}. During
-BI-SP1~subject, Maksym Balatsko was working on prototype of backend server, so choise of used technologies was up to
-him. Then the technology stack was agreed with supervisor of the project. Chosen technologies will be discussed in
-the next chapter.
+The work on the ElateMe project started within the framework of the BI-SP1 (Software Team Project) subject. Our development team divided into groups: Android, iOS, Backend developers, and architect. Our task was to define and document primary client's requirements, implement functioning prototypes of mobile applications and back-end server \ac{API}. During BI-SP1~subject, Maksym Balatsko was working on the prototype of backend server, so the choice of used technologies was up to him. Then the technology stack was agreed with the supervisor of the project. Chosen technologies will be discussed in the next chapter.
 
-Because of changes in requirements and provided a new interface design of the mobile applications, analysis and its
-documentation has undergone certain changes. And at the start of BI-SP2~subject implementation of back-end API,
-on which Maksym and I worked, has started.
-
+Because of changes in requirements and provided a new interface design of the mobile applications, analysis and its documentation have undergone certain changes. And at the start of the BI-SP2 subject implementation of back-end API has begun.
 
 \newcounter{reqcounter}[section]
 \newcommand{\req}[2]{\setlength\itemsep{-0.1em}
@@ -29,28 +21,23 @@ on which Maksym and I worked, has started.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Functional requirements %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Functional requirements}
-Functional requirements specify the behaviors the product will exhibit under specific conditions. They describe what
-the developers must implement to enable users to accomplish their task (user requirements), thereby satisfying the
-business requirements. \cite{funcreq}
+Functional requirements specify the behaviors the product will exhibit under specific conditions. They describe what the developers must implement to enable users to accomplish their task (user requirements), thereby satisfying the business requirements. \cite{funcreq}
 
 \subsection*{Authorization}
 \begin{itemize}
 \funcreq{Sign up via Facebook}
-User shall be able to sign up to ElateMe application with his Facebook account. Application shall load user's data
-such as name, surname, email, date of birth, etc.
+User shall be able to sign up to the ElateMe application with his Facebook account. The application shall load user's data such as name, surname, email, date of birth, etc.
 \funcreq{Logout}
-Authorized user shall be able to log out. In this case he shall also stop receiving any notifications from the
-application.
+Authorized user shall be able to log out. In this case, he shall also stop receiving any notifications from the application.
 \funcreq{Load friends from social network}
-On initial login application shall load list of user's friends that are already signed up in this application. This
-users shall be considered as friends in ElateMe application.
+On initial login application shall load a list of user's friends that are already signed up in this application. These users shall be considered as friends in the ElateMe application.
 \end{itemize}
 
 \subsection*{Friendship management}
 
 \begin{itemize}
 \funcreq{View friends list}
-User shall be able to view list of his Facebook friends that are already signed up in application.
+User shall be able to view the list of his Facebook friends that are already signed up in the application.
 \funcreq{Create friends group}
 User shall be able to create friends group. Groups shall be used for simplification of friends management.
 \funcreq{Delete friends group}
@@ -61,41 +48,39 @@ User shall be able to delete friends group.
 
 \begin{itemize}
 \funcreq{Create wish}
-User shall be able to create wish, set it's title, description, price (amount of money that he(user) wants to gather),
-and deadline.
+User shall be able to create a wish, set its title, description, price (amount of money that he (user) wants to gather), and deadline.
 \funcreq{Delete wish}
-User shall be able to delete his wish if nobody shall have donated money yet.
+User shall be able to delete his wish if nobody has donated money yet.
 \funcreq{Close wish}
-User shall be able to close his wish. Money that will have been gatherd on this wish shall be refunded to donators.
+User shall be able to close his wish. Money that will have been gathered on this wish shall be refunded to donators.
 \funcreq{View users' wishes list}
 User shall be able to browse wishes lists of his friends.
 \funcreq{Create surprise wish}
-User shall be able to create surprise wish for one of his friends. In this case user to whom the wish was addressed
-shall not have acces to it and shall not know about it until the whole amount is collected.
+User shall be able to create surprise wish for one of his friends. In this case, the user, to whom the wish was addressed, shall not have access to it and shall not know about it until the whole amount is collected.
 \funcreq{View contributed wishes list}
-User shall be able to view list of wishes he will have contributed to.
+User shall be able to view the list of wishes he will have contributed.
 \end{itemize}
 
 \subsection*{Feed and notifications}
 \begin{itemize}
 \funcreq{View user's feed}
-User shall recieve feed with latest wishes of his friends.
+User shall receive the feed with the latest news of his friends.
 \funcreq{View user's notifications}
-User shall recieve information about the state of his wishes, new donations, comments, etc. via push-notifications.
+User shall receive information about the state of his wishes, new donations, comments, etc. via push notifications.
 \end{itemize}
 
 \subsection*{Donation management}
 \begin{itemize}
 \funcreq{Donate to wish}
-User shall be able to financially contribute to wishes of his friends.
+User shall be able to contribute to wishes of his friends financially.
 \funcreq{Refund}
-In the case of the closure of the wish, all gatherd money shall be refunded to donators.
+In the case of the closure of the wish, all gathered money shall be refunded to donators.
 \end{itemize}
 
 \subsection*{Comments management}
 \begin{itemize}
 \funcreq{View wishes comments list}
-User shall be able to view list of comments under the wish he will be browsing.
+User shall be able to view the list of comments under the wish he will be browsing.
 \funcreq{Comment wish}
 User shall be able to leave a comment under the wish.
 \funcreq{Delete comment}
@@ -104,21 +89,18 @@ User shall be able to delete his comment.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Non-functional requirements %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Non-functional requirement}
-Non-functional requirement is a software requirement that describes not what the software will do, but how the software
-will do it, for example, software performance requirements, software external interface requirements, software design
-constraints and software quality attributes. Non-functional requirements are difficult to test; therefore they are
-usually evaluated subjectively.\cite{nonfuncreq}
+Non-functional requirement is a software requirement that describes not what the software will do, but how the software will do it, for example, software performance requirements, software external interface requirements, software design constraints and software quality attributes. Non-functional requirements are difficult to test; therefore they are usually evaluated subjectively.\cite{nonfuncreq}
 
 \subsection*{Back-end \ac{API}}
 \begin{itemize}
 \nonfreq{\acs{REST}ful}
 Back-end API shall follow architectural constraints of REST architectural style.
 \nonfreq{\acs{HTTPS}}
-Server shall comunicate with client via \ac{HTTPS}.
+The server shall communicate with the client via \ac{HTTPS}.
 \nonfreq{PostgreSQL database}
-PostgreSQL shall be used as the main DBMS.
+PostgreSQL shall be used as the primary DBMS.
 \nonfreq{Performance}
-Server shall be able to serve 1500 requests per second.
+The server shall be able to serve 1500 requests per second.
 \end{itemize}
 
 \subsection*{Payments}
@@ -128,10 +110,9 @@ User shall be able to make payments via FIO-bank.
 \nonfreq{Bitcoin}
 User shall be able to make payments via Bitcoin.
 \nonfreq{Secure payments}
-System shall ensure secure payments.
+The system shall ensure secure payments.
 \nonfreq{Consistency}
-Servers data about payments shall be consistent with data in payments systems (FIO-bank, Bitcoin, etc.).
-System shall react accordingly to errors appeared during payments.
+Servers data about payments shall be consistent with data in payments systems (FIO-bank, Bitcoin, etc.). The system shall react accordingly to errors appeared during payments.
 \end{itemize}
 
 
@@ -147,35 +128,27 @@ System shall react accordingly to errors appeared during payments.
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Use cases %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Use cases}
-Use cases were defined after analising of functional and non-functional requirements. Use cases documentation serves for
-better undestending of functionality required from the system. Use cases model of this application is presented on the
-diagram \ref{fig:use_cases_diagram}.
+Use cases were defined after analyzing of functional and non-functional requirements. Use cases documentation serves for better understandings of functionality required from the system. Use cases model of this application is presented on the diagram \ref{fig:use_cases_diagram}.
 
 \image[1.3]{use_cases_diagram}{pdf}{Use cases diagram}
 
 Use case model includes the following components:
 
 \begin{itemize}
-\uccomponent{Actors} represent people and external systems involved in a particular case cases. The diagram focuses
-specifically on the actors to insure that the system provides useful and usable functionality.
+\uccomponent{Actors} represent people and external systems involved in a particular case cases. The diagram focuses specifically on the actors to insure that the system provides useful and usable functionality.
 
 The main actors of this system are:
 \begin{itemize}
 \ucactor{User} that uses mobile or web application.
-\ucactor{Facebook} participates in user authorization and provides an interface for obtaining the necessary information
-about him (user).
-\ucactor{Payment system} participates in payments, namely donations and refundances. In the role of payment systems in
-this application are FIO-Banka and Bitcoin.
+\ucactor{Facebook} participates in user authorization and provides an interface for obtaining the necessary information about him (user).
+\ucactor{Payment system} participates in payments, namely donations and redundancies. In the role of payment systems in this application are FIO-Banka and Bitcoin.
 \end{itemize}
 
-\uccomponent{Use cases} represent the functionality that the system provides for actors. In this diagram they are
-divided into logical groups namely
+\uccomponent{Use cases} represent the functionality that the system provides for actors. In this diagram, they are divided into logical groups namely
 \begin{itemize}
-\ucgroup{Authentication} of the user through Facebook and obtaining the necessary information about the user from his
-Facebook account.
+\ucgroup{Authentication} of the user through Facebook and obtaining the necessary information about the user from his Facebook account.
 \ucgroup{Friendship} between users and the division of friends into groups.
-\ucgroup{Wish management} includes the creation of wishes, donations and comments, as well as closure of the wishes with
-subsequent refandation, etc.
+\ucgroup{Wish management} includes the creation of wishes, donations, and comments, as well as closure of the wishes with the subsequent refund, etc.
 \ucgroup{Other} includes the news feed and notifications.
 \end{itemize}
 
@@ -184,13 +157,9 @@ subsequent refandation, etc.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Domain model %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Domain model}
-For simplification of understanding of the main domain classes and their behavior, it was desided to define so-called
-Domain model. Domain model is visual representation of conceptual classes in a domain of interests. Domain model is
-visualization of things in real-world, not of software components such as C++ or Python class.\cite{domainmodel}
+For simplification of understanding of the primary domain classes and their behavior, it was decided to define so-called Domain model. The domain model is the visual representation of conceptual classes in a domain of interests. Domain model is visualization of things in real-world, not of software components such as C++ or Python class.\cite{domainmodel}
 
-Domain model \ref{fig:domain_model} was created by Maksym Balatsko, team lead and advert server developer of ElateMe. In
-his bachelor's thesis\cite{adserver} he describes in detail this diagram, classes specified in it, their atributes, and
-associations between them.
+Domain model \ref{fig:domain_model} was created by Maksym Balatsko, team lead and advert server developer of ElateMe. In his bachelor's thesis\cite{adserver} he describes in detail this diagram, classes specified in it, their attributes, and associations between them.
 
 \image[1.1]{domain_model}{pdf}{Domain model \cite{adserver}}
 
@@ -198,41 +167,29 @@ associations between them.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% System structure %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{System structure}
-The whole ElateMe application system is devided into components. Main components are server, Android and iOS clients.
+The whole ElateMe application system is divided into components. Principal components are the server, Android, and iOS clients.
 
-Detailed structure of server and its connection with external interfaces are presented at the component diagram
-\ref{fig:component_diagram}. As seen in the diagram, server provides interface for mobile applications to communicat via
-REST API. Server also uses interfaces of Facebook (Graph API) to recieve needed data about users and interfaces of
-payment systems (FIO-bank and Bitcoin) for payments processing.
+The detailed structure of server and its connection with external interfaces are presented at the component diagram \ref{fig:component_diagram}. As seen in the diagram, the server provides interface for mobile applications to communicate via REST API. The server also uses interfaces of Facebook (Graph API) to receive needed data about users and interfaces of payment systems (FIO-bank and Bitcoin) for payments processing.
 
-Inside the server is divided into components that are responsible for storing and processing data of application
-entities. This components are called \textit{apps} in Django. Apps communicate with database via Django \textit{models}.
-Models in Django is an interface designed to simplify querying to database.
+Inside the server is divided into components that are responsible for storing and processing data of application entities. This components are called \textit{apps} in Django. Apps communicate with the database via Django \textit{models}. Models in Django is an interface designed to simplify querying to the database.
 
 \image[1.3]{component_diagram}{pdf}{Component diagram}
 
-The diagram also shows the use of interfaces of Facebook and payment systems by mobile clients, but they are not a part
-of my work, so their design and implementation will not be described in this thesis.
+The diagram also shows the use of interfaces of Facebook and payment systems by mobile clients, but they are not a part of my work, so their design and implementation will not be described in this thesis.
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Authentication %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Authentication}
-User has to be authorized to use the application. ElateMe application will not provide in-app registration. User
-authentication will be conducted exclusively through third-party systems. It is made to simplify the registration in
-the application.
+The user has to be authorized to use the application. The ElateMe application will not provide in-app registration. User authentication will be conducted exclusively through third-party systems. It is made to simplify the registration in the application.
 
 
 \subsection{Facebook}
 User authentication will be conducted through his Facebook account.
 
-After first login, application will get from Facebook needed information about the user: first name, last name,
-email address, list of user's friends. User's Facebook friends who are already logged in to the application,
-automatically become his friends in the ElateMe.
+After the first login, the application will get from Facebook needed information about the user: first name, last name, email address, a list of user's friends. User's Facebook friends who are already logged in to the application, automatically become his friends in the ElateMe.
 
-Despite the lack of in-app registration, user's information recieved from Facebook will be stored in ElateMe system
-as well, because user will be able to add other users to his friend list, create friends groups independently from
-Facebook.
+Despite the lack of in-app registration, user's information received from Facebook will be stored in ElateMe system as well, because a user will be able to add other users to his friend list, create friends groups independently from Facebook.
 
 
 
@@ -244,64 +201,38 @@ Facebook.
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Payments system %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Payments system}
-The ElateMe project is based on crowdfunding. So application (and the server in particular) has to provide service for
-payments processing. According to the requirements, this service should use interfaces of FIO-banka and Bitcoin.
+The ElateMe project is based on crowdfunding. So application (and the server in particular) has to provide service for payments processing. According to the requirements, this service should use interfaces of FIO-banka and Bitcoin.
 
 \subsection{Use cases}
 In this application, the payment system participates in the following use cases:
 
 \begin{itemize}
 \uitem{Donation}
-During the donation, the money is transferred to the internal account of ElateMe, where it is stored until one of
-the following use cases.
+During the donation, the money is transferred to the internal account of ElateMe, where it is stored until one of the following use cases.
 
 \uitem{Wish completion}
-In case of fulfillment of the wish, money is transferred to the account of the author of this wish.
+In the case of fulfillment of the wish, money is transferred to the account of the author of this wish.
 
 \uitem{Wish closing}
-There are two situations in which the wish is closed: closing of wish by its author and closing upon expiration of
-deadline. In both cases, already collected money is returned to the donators' accounts.
+There are two situations in which the wish is closed: closing of the wish by its author and closing upon expiration of the deadline. In both cases, already collected money is returned to the donators' accounts.
 \end{itemize}
 
 \subsection{FIO-banka}
-Since the open \ac{API} of the FIO-banka \cite{fio} does not provide sufficient functionality for the needs of this
-application, it was necessary to agree directly with bank on the provision of an needed interface. Due to prolonged
-communication with the bank, we still did not get the full documentation. We only got a description of the payment
-process, which can be seen on the diagram \ref{fig:fio_payment_activity}.
+Since the open \ac{API} of the FIO-banka \cite{fio} does not provide sufficient functionality for the needs of this application, it was necessary to agree directly with the bank on the provision of required interface. Due to prolonged communication with the bank, we still did not get the full documentation. We only got a description of the payment process, which can be seen on the diagram \ref{fig:fio_payment_activity}.
 
 \image[1.3]{fio_payment_activity}{pdf}{Payment via FIO-banka}
 
-As seen on the diagram, before initiating the payment, the mobile application will send a request to the server to
-create a donation, the server will create an unconfirmed donation and respond to the application with information about
-the newly created donation. From this information, the application will take the donation id, which will later serve as
-the identifier of the paid product. The application initializes the payment with the necessary information about the
-user and donation and redirects the user to the payment gateway of the FIO-banka in the web-view. After processing the
-payment, the FIO-Banka redirects the user to one of the two urls on the server, depending on the state of
-the payment (success/fail urls). In case of success, the server marks the payment as confirmed, alternatively not
-successful. The mobile application will close the web-view and notify the user about the status of the payment.
+As seen in the diagram, before initiating the payment, the mobile application will send a request to the server to create a donation; the server will create an unconfirmed donation and respond to the application with information about the newly created donation. From this information, the application will take the donation id, which will later serve as the identifier of the paid product. The application initializes the payment with the necessary information about the user and donation and redirects the user to the payment gateway of the FIO-banka in the web-view. After processing the payment, the FIO-Banka redirects the user to one of the two URLs on the server, depending on the state of the payment (success/fail URLs). In the case of success, the server marks the payment as confirmed, alternatively failed. The mobile application will close the web-view and notify the user about the status of the payment.
 
 \subsection{Bitcoin}
 The second way to make payments in the application is Bitcoin.
 
-Bitcoin is a collection of concepts and technologies that form the basis of a digital money ecosystem. Units of currency
-called bitcoins are used to store and transmit value among participants in the bitcoin network. Bitcoin users
-communicate with each other using the bitcoin protocol primarily via the Internet, although other transport networks can
-also be used. The bitcoin protocol stack, available as open source software, can be run on wide range of computing
-devices, including laptops and smartphones, making the technology easily accessible \cite{bitcoin}. A detailed analysis
-of the system of Bitcoins was carried out in the bachelor's thesis of Yegor Terokhin \cite{ios1}, one of the iOS
-developers of ElateMe. In his work he describes in detail the principles of work of Bitcoins and the benefits of using
-this system in the framework of the ElateMe project.
+Bitcoin is a collection of concepts and technologies that form the basis of a digital money ecosystem. Units of currency called bitcoins are used to store and transmit value among participants in the bitcoin network. Bitcoin users communicate with each other using the bitcoin protocol primarily via the Internet, although other transport networks can also be used. The bitcoin protocol stack, available as open source software, can be run on wide range of computing devices, including laptops and smartphones, making the technology easily accessible \cite{bitcoin}. A detailed analysis of the system of Bitcoins was carried out in the bachelor's thesis of Yegor Terokhin \cite{ios1}, one of the iOS developers of ElateMe. In his work, he describes in detail the principles of work of Bitcoins and the benefits of using this system in the framework of the ElateMe project.
 
-To make payments using Bitcoins, it was decided to use Coinbase. Founded in June of 2012, Coinbase is a digital currency
-wallet and platform where merchants and consumers can transact with new digital currencies like bitcoin and ethereum
-\cite{coinbase}. The main benefit of using Coinbase is that it provides \ac{SDK} for both mobile platforms and a python
-used for the implementation of the backend in this project.
+To make payments via Bitcoin, Yegor decided to use Coinbase. Founded in June of 2012, Coinbase is a digital currency wallet and platform where merchants and consumers can transact with new digital currencies like bitcoin and ethereum \cite{coinbase}. The main benefit of using Coinbase is that it provides \ac{SDK} for both mobile platforms and a python used for the implementation of the backend in this project.
 
 \subsection{Refund mechanism}
-As was mentioned before, after closing of the wish, collected money will be refunded to the donators' accounts. ElateMe
-will have bank account or online wallet for every payment system that it will provide. As every payment system has
-different interface for conducting payments, every donation and its refund will use different way of payment processing,
-depending on available interface for each particular system. There are three possible solutions on processing refunds:
+As was mentioned before, after closing of the wish, collected money will be refunded to the donators' accounts. ElateMe will have a bank account or online wallet for every payment system that it will provide. As every payment system has a different interface for conducting payments, every donation and its refund will use a different way of payment processing, depending on the available interface for each particular system. There are three possible solutions on processing refunds:
 
 \begin{itemize}
     \item \ac{SDK} (e.g. Coinbase \ac{SDK})
@@ -309,52 +240,35 @@ depending on available interface for each particular system. There are three pos
     \item Web user interface (e.g. mBank)
 \end{itemize}
 
-As long as payment system provides \ac{SDK} or any other \ac{API}, the implementation of donation and refunds processing
-does not require complicated systems to conduct payments. On the current stage of development it was decided to use only
-FIO-banka and Bitcoin, which provide appropriate interfaces. But in case of the addition of payment systems that don't
-have \ac{API} for developers, payments, and refundations in particular, need to be processed through other available
-interfaces.
+As long as payment system provides \ac{SDK} or any other \ac{API}, the implementation of donation and refunds processing does not require complicated systems to conduct payments. On the current stage of development, it was decided to use only FIO-banka and Bitcoin, which provide appropriate interfaces. But in the case of the addition of payment systems that don't have \ac{API} for developers, payments, and refunds, in particular, need to be processed through other available interfaces.
 
 Following solution was proposed by Michal Maněna, project supervisor of ElateMe.
 
-User web interfaces of payment systems that don't provide apropriate \ac{API} will be used for conducting refunds. It
-was decided to use Selenium for automatization of payments via user web interface. Selenium is a set of tools
-specifically for automating web browsers \cite{selenium}. So it will simulate actions directly in web browser to provide
-refunds to the users' bank accounts. Here it is necessary to reckon with the fact that many banks send a confirmation
-code via SMS. In this case, it is necessary to have a \ac{GSM} module with a SIM card physically connected to the
-server. Then there will be running daemon that will collect and save the SMS messages in the database. Then confirmation
-code will be entered in the corresponding field by Selenium and sent to process payment.
+User web interfaces of payment systems that don't provide proper \ac{API} will be used for conducting refunds. It was decided to use Selenium for automatization of payments via user web interface. Selenium is a set of tools specifically for automating web browsers \cite{selenium}. So it will simulate actions directly in the web browser to provide refunds to the users' bank accounts. Here it is necessary to reckon with the fact that many banks send a confirmation code via SMS. In this case, it is required to have a \ac{GSM} module with a SIM card physically connected to the server. Then there will be running daemon that will collect and save the SMS messages in the database. Then confirmation code will be entered in the corresponding field by Selenium and sent to process payment.
 
 
 \section{Push notifications}
-Push notifications are small important messages from the application or service, displayed by the operating system when
-the user does not directly work with the specified application or service. The advantage of such notifications is that
-there is no need to keep the program in memory, spending on it processor powers and memory.
+Push notifications are short important messages from the application or service, displayed by the operating system when the user does not directly work with the specified application or service. The advantage of such notifications is that there is no need to keep the program in memory, spending on it processor powers and memory.
 
-In ElateMe application the user will receive information about the state of his wishes, new donations, comments, etc.
+In the ElateMe application, the user will receive information about the state of his wishes, new donations, comments, etc.
 
 \subsection{Mechanism of push notifications}
 
 \image[1]{push_notifications_mechanism}{pdf}{Mechanism of push notifications}
 
-For server to be able to send push notifications it needs to store a token. Token is a line of characters that serves
-as an address of specific application on the specific device. Token is generated by \ac{OSPNS}. After application is
-installed on the device it registers itself for receiving of push notifications, OS requests token from \ac{OSPNS},
-application receives token and sends it to the server.
+For the server to be able to send push notifications it needs to store a token. Token is a line of characters that serves as an address of specific application on the particular device. The token is generated by \ac{OSPNS}. After the application is installed on the device it registers itself for receiving of push notifications; OS requests token from \ac{OSPNS}, the application receives token and sends it to the server.
 
 \subsection{Actors}
 
 \begin{itemize}
 \aitem{\ac{OSPNS}}
-Every operating system has its own service for processing push notifications. They are \ac{GCM} for Android and \ac{APNs}
-for iOS. As shown on the diagram \ref{fig:push_notifications_mechanism} OSPNS sends a token to the application
-when it registers in the service and sends the push notifications to the application itself.
+Every operating system has its service for processing push notifications. They are \ac{GCM} for Android and \ac{APNs} for iOS. As shown on the diagram \ref{fig:push_notifications_mechanism} OSPNS sends a token to the application when it registers in the service and sends the push notifications to the application itself.
 
 \aitem{Server}
-The server stores the tokens of each individual device and sends the push notifications to OSPNS.
+The server stores the tokens of each device and sends the push notifications to OSPNS.
 
 \aitem{Client application}
-The application is registered to receive push notification, receives a token from OSPNS and sends it to the server.
+The application is registered to receive a push notification, receives a token from OSPNS and sends it to the server.
 \end{itemize}
 
 
