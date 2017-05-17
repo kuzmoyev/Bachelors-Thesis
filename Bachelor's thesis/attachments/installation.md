@@ -40,8 +40,7 @@ Migrate Django models:
     python manage.py makemigrations
     python manage.py migrate
 
-By default project runs with `DEBUG=True` and sqlite database.
-How to setup PostgreSQL and run project without `DEBUG` see [Deploy](#deploy) section.
+By default project runs with `DEBUG=True` and SQLite database.
 
 Run tests:
 
@@ -52,5 +51,3 @@ Now you should be able to run project locally:
     python manage.py runserver
 
 Server should be running on [localhost:8000](http://localhost:8000)
-
-### Deploy

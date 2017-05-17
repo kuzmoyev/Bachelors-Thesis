@@ -1,0 +1,78 @@
+This is the guide on how to setup, run and deploy ElateMe back-end
+server on Ubuntu OS.
+{\parindent0pt
+\section*{Requirements}\label{requirements}
+
+To be able to setup and run project you need
+
+\begin{itemize}
+\tightlist
+\item
+  python3
+\item
+  pip
+\item
+  virtualenv
+\end{itemize}
+
+To install run:
+
+\begin{verbatim}
+sudo apt-get update
+sudo apt-get install python3
+sudo apt-get install python-pip
+pip install virtualenv
+\end{verbatim}
+
+\pagebreak
+
+\section*{Setup}\label{setup}
+
+Clone repository:
+
+\begin{verbatim}
+git clone git@repo.micman.cz:allmywishes/server-api.git ElateMe
+\end{verbatim}
+
+Go to \texttt{ElateMe} folder and create virtual environment:
+
+\begin{verbatim}
+cd ElateMe
+virtualenv -p /usr/bin/python3.5 venv
+\end{verbatim}
+
+To begin using the virtual environment, it needs to be activated:
+
+\begin{verbatim}
+source venv/bin/activate
+\end{verbatim}
+
+Install requirements inside virtual environment:
+
+\begin{verbatim}
+pip install -r requirements.txt
+\end{verbatim}
+
+Migrate Django models:
+
+\begin{verbatim}
+python manage.py makemigrations
+python manage.py migrate
+\end{verbatim}
+
+By default project runs with \texttt{DEBUG=True} and SQLite database.
+
+Run tests:
+
+\begin{verbatim}
+python manage.py test
+\end{verbatim}
+
+Now you should be able to run project locally:
+
+\begin{verbatim}
+python manage.py runserver
+\end{verbatim}
+
+Server should be running on \href{http://localhost:8000}{localhost:8000}
+}
